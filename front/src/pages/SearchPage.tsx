@@ -5,28 +5,28 @@ import { IBook } from "../@types";
 
 //get query string
 const useQuery = () => {
-  return new URLSearchParams(useLocation().search); // exemple :?query=harry+potter.
+  return new URLSearchParams(useLocation().search);  // get query params from URL like ?query=harry
 };
 
 const SearchPage = () => {
   const query = useQuery();
-  const searchTerm = query.get("query") || ""; //Si l'URL contient ?query=harry, alors searchTerm = "harry".
+  const searchTerm = query.get("query") || ""; // get search term from URL
   const [results, setResults] = useState<IBook[]>([]);
 
   useEffect(() => {
     const fetchResults = async () => {
-      const res = await searchBooks(searchTerm);
+      const res = await searchBooks(searchTerm);// search books based on search term
       setResults(res);
     };
 
     if (searchTerm) {
       fetchResults();
     }
-  }, [searchTerm]);
+  }, [searchTerm]); // rerun when searchTerm changes
 
   return (
     <div>
-      {/* Ajoute une marge à gauche sur les écrans md et plus grands */}
+     
       <section className="content ml-[5vw] mr-[5vw]">
         <h2 className="text-xl mt-8 mb-4 font-bold">
           {results.length} Résultat(s) pour la recherche : " {searchTerm} "

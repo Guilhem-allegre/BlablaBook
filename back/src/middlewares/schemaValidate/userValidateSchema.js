@@ -4,13 +4,15 @@ import { registerSchema } from "./authValidateSchema.js";
 
 
 const updateUserSchema = registerSchema
+ // make name email password confirmPassword optional
   .fork(["name", "email", "password", "confirmPassword"], (schema) =>
     schema.optional()
   ).append({
+    // make currentPassword required only if password exists
     currentPassword: Joi.string().required().when("password", {
       is: Joi.exist(),
       then: Joi.string().required(),
-      otherwise: Joi.forbidden(), 
+      otherwise: Joi.forbidden(), // currentPassword can't be here without password
     }),
   })
   .keys({
@@ -21,7 +23,7 @@ const updateUserSchema = registerSchema
         "any.only": "Les mots de passe ne correspondent pas",
         "any.required": "La confirmation du mot de passe est requise",
       }),
-      otherwise: Joi.forbidden(),
+      otherwise: Joi.forbidden(), // confirmPassword can't be here without password
     }),
     // Add currentPassword with conditional validation
     currentPassword: Joi.string().when("password", {

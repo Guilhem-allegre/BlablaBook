@@ -6,14 +6,17 @@ import { useAuthStore } from "../utils/store/useAuthStore";
 
 const ProfilePage = () => {
   const [localUser, setLocalUser] = useState<IUser | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState<string | null>(null); // Error message if any
 
   const { user } = useAuthStore();
 
   useEffect(() => {
+    // Fetch user data when the component mounts
+    
     async function fetchUser() {
       if (!user?.id) {
+         // If user is not logged in
         setError("Utilisateur non connecté");
         setLoading(false);
         return;
@@ -36,6 +39,7 @@ const ProfilePage = () => {
     fetchUser();
   }, []);
 
+  // Conditional rendering based on loading or error state
   if (loading) return <p className="text-center">Chargement de votre profil...</p>;
   if (error) return <p className="text-center text-red-500">{error}</p>;
   if (!localUser) return null;

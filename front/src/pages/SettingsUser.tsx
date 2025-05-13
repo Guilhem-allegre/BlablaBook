@@ -1,3 +1,4 @@
+// user settings component for managing profile information
 import type { IUser, IUserUpdate } from "../@types";
 import { useState, useEffect, useRef } from "react";
 import { getOneUser, updateUser, deleteUser } from "../api/apiUser";
@@ -9,25 +10,30 @@ import { toastSuccess } from "../utils/toast/toastSuccess";
 
 const SettingsUser = () => {
   const navigate = useNavigate();
+  // main state variables for user data
   const [userData, setUserData] = useState<IUser | null>(null);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
 
-  const [emailError, setEmailError] = useState(false);
+  //const [emailError, setEmailError] = useState(false);
+  // modal visibility states
   const [confirmationModal, setConfirmationModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
+  // edit mode toggles for form fields
   const [editUserName, setEditUserName] = useState(false);
   const [editEmail, setEditEmail] = useState(false);
+  const [editPassword, setEditPassword] = useState(false);
+  // password related states
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [editPassword, setEditPassword] = useState(false);
 
   // input ref to handle focus
   const usernameInputRef = useRef<HTMLInputElement | null>(null);
   const emailInputRef = useRef<HTMLInputElement | null>(null);
 
+  // fetch user data on component mount
   useEffect(() => {
     const loadData = async () => {
       const oneUser = await getOneUser();
@@ -44,25 +50,29 @@ const SettingsUser = () => {
     loadData();
   }, []);
 
+  // handle form submission - show confirmation modal
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Ouvrir la fenêtre de confirmation
+    // open confirmation modal
     setConfirmationModal(true);
   };
 
+  // process the update after confirmation
   const handleConfirmation = async (confirm: boolean) => {
     if (!confirm) {
       setConfirmationModal(false);
       return;
     }
 
+    // prepare data object for update
     const updatedData: IUserUpdate = {};
 
+    // only add fields that changed
     if (username !== userData?.name) updatedData.name = username;
     if (email !== userData?.email) updatedData.email = email;
 
-    // Gestion du mot de passe
+    // handle password update
     if (editPassword) {
       if (newPassword !== confirmPassword) {
         setPasswordError("Les mots de passe ne correspondent pas.");
@@ -73,6 +83,7 @@ const SettingsUser = () => {
     }
 
     try {
+      // only send request if there are changes
       if (Object.keys(updatedData).length > 0) {
         await updateUser(updatedData);
         const updatedUser = await getOneUser();
@@ -81,11 +92,11 @@ const SettingsUser = () => {
           return;
         }
         setUserData(updatedUser);
-        // pour mettre a jour le user sur tout les autre composant
+        // update user state across all components
         useAuthStore.getState().setUser(updatedUser);
       }
 
-      // Réinitialisation des champs mot de passe
+      // reset form fields after successful update
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
@@ -94,6 +105,7 @@ const SettingsUser = () => {
       setConfirmationModal(false);
       toastSuccess("Profil mis à jour avec succès !")
     } catch (error: unknown) {
+      // handle api errors
       const apiError = error as IError;
 
       if (apiError.errors && apiError.errors.length > 0) {
@@ -102,24 +114,25 @@ const SettingsUser = () => {
         toastError(apiError.message || "Une erreur est survenue.");
       }
 
-      setConfirmationModal(false); // Ne pas rester bloqué
+      setConfirmationModal(false); // avoid modal staying open
     }
   };
 
+  // handle account deletion
   const handleDeleteAccount = async () => {
     await deleteUser();
 
-    // Rediriger vers la page d'accueil ou de connexion après suppression
+    // redirect to home page after account deletion
     navigate("/");
   };
 
-  // Fonction pour gérer le focus et la sélection du contenu de l'input du nom d'utilisateur
+  // toggle username edit mode and focus input when enabled
   const handleUsernameEdit = () => {
     setEditUserName(!editUserName);
 
-    // Si on active l'édition, focus et sélectionne tout le texte
+    // focus and select text when edit mode is activated
     if (!editUserName) {
-      // setTimeout execute focus after 0ms delay
+      // setTimeout used to ensure dom is updated before focusing
       setTimeout(() => {
         if (usernameInputRef.current) {
           usernameInputRef.current.focus();
@@ -129,11 +142,11 @@ const SettingsUser = () => {
     }
   };
 
-  // Fonction pour gérer le focus et la sélection du contenu de l'input de l'email
+  // toggle email edit mode and focus input when enabled
   const handleEmailEdit = () => {
     setEditEmail(!editEmail);
 
-    // Si on active l'édition, focus et sélectionne tout le texte
+    // focus and select text when edit mode is activated
     if (!editEmail) {
       setTimeout(() => {
         if (emailInputRef.current) {
@@ -147,13 +160,13 @@ const SettingsUser = () => {
   return (
     <div className="w-full px-4">
       <div className="px-4 sm:px-10 pt-5 font-title">
-        {/* Bouton Retour */}
+        {/* back button */}
         <Link to="/profile">
           <button className="text-blue-900 hover:underline">← Retour</button>
         </Link>
       </div>
       <div className="flex flex-col w-full  items-center font-title">
-        {/* Profil */}
+        {/* user profile section */}
         <div className="flex mb-5 items-center">
           <div className="w-24 h-24 rounded-full bg-gray-300 flex items-center justify-center text-4xl mb-4">
             👤
@@ -179,13 +192,13 @@ const SettingsUser = () => {
           </div>
         </div>
 
-        {/* Form */}
+        {/* settings form */}
         <div className="font-body [word-spacing:2px] tracking-widest w-full max-w-md px-4">
           <form
             onSubmit={handleSubmit}
             className="w-full max-w-md flex flex-col gap-4 pt-10 "
           >
-            {/* Pseudo */}
+            {/* username field with edit toggle */}
             <div className="flex items-center justify-between border-b border-gray-300 pb-2">
               <input
                 ref={usernameInputRef}
@@ -212,7 +225,7 @@ const SettingsUser = () => {
                 ></i>
               </button>
             </div>
-            {/* email */}
+            {/* email field with edit toggle */}
             <div className="flex items-center justify-between border-b border-gray-300 pb-2">
               <input
                 ref={emailInputRef}
@@ -239,11 +252,8 @@ const SettingsUser = () => {
                 ></i>
               </button>
             </div>
-            {emailError && (
-              <p className="text-red-500">Les emails ne correspondent pas.</p>
-            )}
-            {/* Nouveau mot de passe */}
-            {/* Changer mot de passe */}
+        
+            {/* password field with edit toggle */}
             <div className="flex items-center justify-between border-b border-gray-300 pb-2">
               <input
                 className="w-120 my-1 focus:outline-none placeholder-placeholder"
@@ -267,6 +277,7 @@ const SettingsUser = () => {
                 ></i>
               </button>
             </div>
+            {/* additional password fields shown when editing password */}
             {editPassword && (
               <>
                 <div className="flex items-center justify-between border-b border-gray-300 pb-2">
@@ -289,9 +300,10 @@ const SettingsUser = () => {
                 </div>
               </>
             )}
+            {/* display password error message if any */}
             {passwordError && <p className="text-red-500">{passwordError}</p>}
 
-            {/* Bouton sauvegarder */}
+            {/* save button */}
             <button
               className="mt-4 bg-white border py-2 px-4 rounded hover:bg-gray-200 font-title tracking-normal"
               type="submit"
@@ -301,13 +313,13 @@ const SettingsUser = () => {
           </form>
         </div>
 
-        {/* Modal de confirmation */}
+        {/* confirmation modal */}
         {confirmationModal && (
           <div className="fixed center flex items-center justify-center">
             <div className="bg-white p-6 rounded shadow-lg m-4 max-w-md w-full">
               <p>Êtes-vous sûr de vouloir sauvegarder ces modifications ?</p>
 
-              {/* Afficher l'email modifié s'il a changé */}
+              {/* show changed email if modified */}
               {email !== userData?.email && (
                 <div className="mt-4">
                   <p>
@@ -335,6 +347,7 @@ const SettingsUser = () => {
           </div>
         )}
 
+        {/* account deletion confirmation modal */}
         {deleteModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-body p-6 rounded shadow-lg">
@@ -362,7 +375,7 @@ const SettingsUser = () => {
           </div>
         )}
 
-        {/* Boutons se déconnecter et supprimer */}
+        {/* bottom action buttons */}
         <div className="flex gap-20 mt-12 mb-12">
           <Link
             to="/logout"

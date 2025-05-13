@@ -8,35 +8,40 @@ const SearchBar = () => {
   const [results, setResults] = useState<IBook[]>([]);
   const navigate = useNavigate();
 
-  // fonction pour gerer la page des resultats de recherche
+  // handle search result page
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (researchTerm.trim()) {
-      navigate(`/search?query=${encodeURIComponent(researchTerm.trim())}`); // renvoi vers la page des resultats a la soummission du formulaire
+      navigate(`/search?query=${encodeURIComponent(researchTerm.trim())}`); // go to search result page on form submit
       setResearch("");
     }
   };
 
-  //fonction pour reset la bar de recherche apres avoir clicquer sur une suggestion
+  // reset search bar after clicking on a suggestion
   const handleSuggestionClick = () => {
     setResearch("");
     setResults([]);
   };
 
-  //fonction qui effectue un appel a l'api afin de proposer des suggestions
+  // fetch book suggestions from the api
   useEffect(() => {
     const fetchData = async () => {
-      // si la recherche fais plus de 2 caractezres on commence a chercher dans la bdd
-      if (researchTerm.length > 2) {
-        const res = await searchBooks(researchTerm);
-        setResults(res);
-      } else {
-        setResults([]);
+      try {
+        // start searching in db if research term is longer than 2 characters
+        if (researchTerm.length > 2) {
+          const res = await searchBooks(researchTerm);
+          setResults(res);
+        } else {
+          setResults([]);
+        }
+      } catch (error) {
+        console.error("Error fetching search results:", error); // log the error if fetching fails
+        setResults([]); // optionally clear the results or show an error state
       }
     };
 
-    const timer = setTimeout(fetchData, 300);
-    return () => clearTimeout(timer);
+    const timer = setTimeout(fetchData, 300); // add delay to avoid too many requests
+    return () => clearTimeout(timer); // clear the timeout if researchTerm changes
   }, [researchTerm]);
 
   return (
@@ -49,7 +54,7 @@ const SearchBar = () => {
           type="text"
           value={researchTerm}
           placeholder="Chercher un livre ou un auteur"
-          onChange={(e) => setResearch(e.target.value)}
+          onChange={(e) => setResearch(e.target.value)} // update research term on input change
           className="border rounded px-3 py-2 w-full pl-10 placeholder-gray-400 "
         />
       </form>
