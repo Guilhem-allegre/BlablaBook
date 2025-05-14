@@ -12,16 +12,26 @@ const bookController = {
    * @returns {Array} - Object
    */
   async getAllBooks(req, res, next) {
-    const { search, categoryId, categoryName, onlyCategories } = req.query; // get query
+    const { search, categoryId, categoryName, onlyCategories, topRated } = req.query; // get query
 
     const whereConditions = {};
 
     const includeOptions = [{ association: "categories" }, { association: "authors" }];
 
+    // get all categories if asking in URL
     if (onlyCategories === "true") {
       try {
         const categories = await Category.findAll();
         return res.status(200).json(categories);
+      } catch (error) {
+        return next(error);
+      }
+    }
+    // get top rated books if asking in URL
+    if (topRated === "true") {
+      try {
+        const topBooks = await Book.findAll({ order: ["rating", "DESC"] });
+        return res.status(200).json(topBooks);
       } catch (error) {
         return next(error);
       }

@@ -126,3 +126,27 @@ export async function getBooksByCategories(id: number): Promise<IBook[]> {
     return [];
   }
 }
+
+/**
+ * Function to fetch all categories.
+ *
+ * @returns {Promise<ICategory[]>} - A promise that resolves to an array of category objects.
+ * @throws {Error} - Throws an error if the request fails or if there is an issue with the network.
+ */
+export async function getTopRatedBooks(): Promise<ICategory[]> {
+  // Request parameters optimized to fetch only categories
+  const url = `${apiBaseUrl}/books?topRated=true&limit=5`;
+
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`Erreur lors de la récupération des catégories: ${response.statusText}`);
+    }
+    const categories = (await response.json()) as ICategory[];
+    return categories;
+  } catch (error) {
+    console.error("Erreur lors de la récupération des catégories:", error);
+    throw error;
+  }
+}
