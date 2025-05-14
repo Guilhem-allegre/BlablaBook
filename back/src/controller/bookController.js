@@ -31,9 +31,11 @@ const bookController = {
     if (topRated === "true") {
       try {
         const topBooks = await Book.findAll({
-          include: includeOptions,
+          // order by rating with best rating first
           order: [["rating", "DESC"]],
+          // only 5 first books
           limit: 5,
+          // do not include book with no rating
           where: {
             rating: {
               [Op.not]: null, // Exclut les livres sans note
