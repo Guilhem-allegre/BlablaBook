@@ -35,6 +35,10 @@ Book.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    rating: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
   },
   {
     sequelize,
