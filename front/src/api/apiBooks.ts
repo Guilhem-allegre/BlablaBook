@@ -135,7 +135,7 @@ export async function getBooksByCategories(id: number): Promise<IBook[]> {
  */
 export async function getTopRatedBooks(): Promise<IBook[]> {
   // Request parameters optimized to fetch only categories
-  const url = `${apiBaseUrl}/books?topRated=true&limit=5`;
+  const url = `${apiBaseUrl}/books?topRated=true`;
 
   try {
     const response = await fetch(url);
@@ -144,6 +144,8 @@ export async function getTopRatedBooks(): Promise<IBook[]> {
       throw new Error(`Erreur lors de la récupération des catégories: ${response.statusText}`);
     }
     const topBooks = (await response.json()) as IBook[];
+    console.log(topBooks);
+
     return topBooks;
   } catch (error) {
     console.error("Erreur lors de la récupération des catégories:", error);

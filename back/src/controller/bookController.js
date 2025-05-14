@@ -1,5 +1,5 @@
 import { Book, Category } from "../models/associations.js";
-import { Op } from "sequelize";
+import { Op, where } from "sequelize";
 import { ApiError } from "../middlewares/ApiError.js";
 
 const bookController = {
@@ -30,7 +30,16 @@ const bookController = {
     // get top rated books if asking in URL
     if (topRated === "true") {
       try {
-        const topBooks = await Book.findAll({ order: ["rating", "DESC"] });
+        const topBooks = await Book.findAll({
+          include: includeOptions,
+          order: [["rating", "DESC"]],
+          limit: 5,
+          where: {
+            rating: {
+              [Op.not]: null, // Exclut les livres sans note
+            },
+          },
+        });
         return res.status(200).json(topBooks);
       } catch (error) {
         return next(error);
