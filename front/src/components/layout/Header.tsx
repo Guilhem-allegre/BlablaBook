@@ -16,7 +16,7 @@ const Header = () => {
         <SearchBar />
 
         <nav className="hidden md:flex gap-6">
-          <Link className="hover:text-yellow-700 " to="/">
+          <Link className="hover:text-yellow-700 " to="/" aria-label="lien vers Accueil">
             <i className="fa-solid fa-house-chimney text-xl ml:text-base"></i>
             <span className="whitespace-nowrap hidden ml:inline"> Accueil</span>
           </Link>
@@ -26,12 +26,12 @@ const Header = () => {
           </Link>
 
           {!user ? (
-            <Link className="hover:text-yellow-700" to="/auth">
+            <Link className="hover:text-yellow-700" to="/auth" aria-label="Mon compte">
               <i className="fa-solid fa-user text-xl ml:text-base"></i>
               <span className="hidden ml:inline"> Mon compte</span>
             </Link>
           ) : (
-            <Link className="hover:text-yellow-700 " to="/profile">
+            <Link className="hover:text-yellow-700 " to="/profile" aria-label={`Voir le profil de ${user.name}`}>
               <i className="fa-solid fa-user text-xl"></i>
               <span className="hidden ml:inline"> {user.name}</span>
             </Link>
