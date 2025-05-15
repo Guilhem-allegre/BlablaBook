@@ -14,6 +14,7 @@
   --breakpoint-ml: 59.375rem; /* 950 px */
 }
 
+/* put every toast under the header */
 .iziToast-wrapper.iziToast-wrapper-topRight {
   top: 60px !important;
   right: 15px !important;
