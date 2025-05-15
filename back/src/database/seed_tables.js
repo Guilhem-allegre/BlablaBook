@@ -158,7 +158,7 @@ async function seedDatabase() {
         published: "2013",
         cover_url: "1354914714i/16176099",
         page_count: 336,
-        rating: 1,
+        rating: 1.6,
       },
       {
         isbn: "9782080460110",
