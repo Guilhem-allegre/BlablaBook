@@ -168,7 +168,7 @@ async function seedDatabase() {
         published: "2024",
         cover_url: "1730186529i/216428118",
         page_count: 432,
-        rating: 5,
+        rating: 3,
       },
       {
         isbn: "9780316015844",
@@ -178,7 +178,7 @@ async function seedDatabase() {
         published: "2006",
         cover_url: "1700522826i/41865",
         page_count: 544,
-        rating: 5,
+        rating: 3,
       },
       {
         isbn: "9782811210014",
@@ -516,6 +516,7 @@ async function seedDatabase() {
         published: "2016",
         cover_url: "1524087196i/33167226",
         page_count: 384,
+        rating: 4.7,
       },
       {
         isbn: "9782017108313",
@@ -570,6 +571,7 @@ async function seedDatabase() {
         published: "2022",
         cover_url: "1657191679i/61405470",
         page_count: 176,
+        rating: 5,
       },
       {
         isbn: "9791032710265",

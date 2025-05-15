@@ -36,7 +36,7 @@ Book.init(
       allowNull: false,
     },
     rating: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.REAL,
       allowNull: true,
     },
   },
