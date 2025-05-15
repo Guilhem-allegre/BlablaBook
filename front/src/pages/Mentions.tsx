@@ -1,4 +1,4 @@
-export default function Mentions() {
+const Mentions = () => {
   return (
     <div className="flex justify-center p-20 pb-25 items-stretch">
       <div className="max-w-4xl text-gray-800 space-y-8">
@@ -70,3 +70,5 @@ export default function Mentions() {
     </div>
   );
 }
+
+export default Mentions;
