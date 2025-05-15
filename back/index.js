@@ -20,9 +20,9 @@ app.use(router);
 //Middleware error
 app.use(errorHandler);
 
-// app.get('/', (req, res) => {
-//   res.status(200).send('API is running');
-// });
+app.get('/', (req, res) => {
+  res.status(200).send('API is running');
+});
 
 // Start
 app.listen(process.env.PORT, () => {
