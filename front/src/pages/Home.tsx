@@ -1,11 +1,12 @@
-import PopularBooks from "../components/PopularsBooks";
+import { getTopRatedBooks } from "../api/apiBooks";
+import BookGrid from "../components/BookGrid";
 import PresentationPage from "../components/Presentation";
 import RecommendedBooks from "../components/RecommendedBooks";
 
 const HomePage = () => (
   <>
     <PresentationPage />
-    <PopularBooks />
+    <BookGrid title="Livres Populaires" fetchBooks={getTopRatedBooks} />
     <RecommendedBooks />
   </>
 );
