@@ -1,27 +1,30 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useAuthStore } from "../store/useAuthStore";
 
 const useTheme = () => {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const theme = useAuthStore((state) => state.theme);
+  const setTheme = useAuthStore((state) => state.setTheme);
 
   useEffect(() => {
     const root = document.documentElement;
-    const stored = localStorage.getItem("theme") as "light" | "dark" | null;
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
 
-    const initialTheme = stored || (prefersDark ? "dark" : "light");
-    root.classList.add(initialTheme);
-    setTheme(initialTheme);
-  }, []);
+    // Si aucun thème défini, on initialise avec les préférences système
+    if (!theme) {
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const initialTheme = prefersDark ? "dark" : "light";
+      root.classList.add(initialTheme);
+      setTheme(initialTheme);
+    } else {
+      root.classList.add(theme);
+    }
+  }, [theme, setTheme]);
 
   const toggleTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
     const root = document.documentElement;
+    const newTheme = theme === "dark" ? "light" : "dark";
 
     root.classList.remove("light", "dark");
     root.classList.add(newTheme);
-    localStorage.setItem("theme", newTheme);
     setTheme(newTheme);
   };
 

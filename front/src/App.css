@@ -15,6 +15,13 @@
   --breakpoint-ml: 59.375rem; /* 950 px */
 }
 
+.dark {
+  --color-body: #252d49;
+  --color-sidebar: #2E3440;
+  --color-header: #1C1C26;
+  --color-placeholder: #faf4e8;
+}
+
 .iziToast-wrapper.iziToast-wrapper-topRight {
   top: 60px !important;
   right: 15px !important;

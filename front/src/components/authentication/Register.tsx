@@ -195,7 +195,7 @@ const Register = ({ data, onChange, onSubmit }: IRegisterProps) => {
       <div className="flex justify-center">
         <button
           type="button"
-          className="bg-gray-800 hover:bg-gray-600 text-white py-2 px-6 rounded cursor-pointer"
+          className="bg-gray-800 hover:bg-gray-600 text-white py-2 px-6 rounded cursor-pointer dark:bg-gray-600 dark:hover:bg-gray-400"
           onClick={onSubmit}
         >
           Inscription

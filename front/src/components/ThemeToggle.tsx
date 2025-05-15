@@ -6,7 +6,7 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="rounded-lg text-xl transition bg-palette-sand dark:bg-palette-roseDark text-black dark:text-palette-mauveDark"
+      className="rounded-lg cursor-pointer text-xl transition text-black dark:text-placeholder dark:hover:text-yellow-500"
     >
       <i
         className={`fa-solid transition-transform duration-300 ${

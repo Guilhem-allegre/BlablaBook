@@ -27,7 +27,7 @@ function App() {
   const location = useLocation();
   return (
     // Wrapper div pour toute l'application
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-white text-black dark:text-placeholder transition-colors">
       <BackToTopPage />
       <Navbar />
       <Header />

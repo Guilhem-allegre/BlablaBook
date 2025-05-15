@@ -19,7 +19,6 @@ const Authentication = () => {
       toastError("Les mots de passe ne correspondent pas");
       return;
     }
-
     try {
       await registerUser(registerData);
       toastSuccess("Inscription réussie !");
@@ -32,7 +31,6 @@ const Authentication = () => {
       });
     } catch (error: unknown) {
       const apiError = error as IError;
-
       if (apiError.errors && apiError.errors.length > 0) {
         toastError(apiError.errors);
       } else {
@@ -42,7 +40,7 @@ const Authentication = () => {
   };
 
   return (
-    <section className="pb-14 md:pb-6 ">
+    <section className="pb-14 md:pb-6">
       <Login />
       <Register data={registerData} onChange={setRegisterData} onSubmit={handleRegister} />
     </section>
