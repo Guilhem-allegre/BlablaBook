@@ -5,23 +5,28 @@ import { IBooks } from "../@types";
 type BookGridProps = {
   title: string;
   fetchBooks: () => Promise<IBooks>;
+  currentBookId?: number;
 };
 
-const BookGrid = ({ title, fetchBooks }: BookGridProps) => {
+const BookGrid = ({ title, fetchBooks, currentBookId }: BookGridProps) => {
   const [bookList, setBookList] = useState<IBooks>([]);
+
   useEffect(() => {
     async function loadBooks() {
       try {
-        const data = await fetchBooks();
-        setBookList(data);
+        const allBooks = await fetchBooks();
+        const filteredBooks = currentBookId
+          ? allBooks.filter((book) => book.id !== currentBookId).splice(0, 5)
+          : allBooks;
+        setBookList(filteredBooks);
       } catch (error) {
         console.log(error);
       }
     }
     loadBooks();
-  }, []);
+  }, [fetchBooks, currentBookId]);
   return (
-    <section className="content ml-[5vw] mr-[5vw] pt-8">
+    <section className="content ml-[5vw] mr-[5vw] py-8">
       <h2 className="text-3xl mb-4 font-bold font-title">{title}</h2>
       <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
         {bookList.map((book) => {

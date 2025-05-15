@@ -7,6 +7,7 @@ import { useErrorHandler } from "../utils/useErrorHandler";
 import { toastSuccess, toastInfo, toastWarning } from "../utils/toast/toastSuccess";
 import { useAuthStore } from "../utils/store/useAuthStore";
 import BookGrid from "./BookGrid";
+import RecommendedBooks from "./RecommendedBooks";
 
 /**
  * @component BookDetail
@@ -216,9 +217,11 @@ const BookDetail = () => {
           </div>
         </div>
       </div>
+      {/* <RecommendedBooks /> */}
       <BookGrid
         title="Ces livres peuvent aussi vous plaire"
         fetchBooks={() => getBooksByCategory(book.categories[0].id)}
+        currentBookId={book.id}
       />
     </>
   );
