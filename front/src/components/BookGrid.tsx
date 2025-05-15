@@ -26,7 +26,7 @@ const BookGrid = ({ title, fetchBooks, currentBookId }: BookGridProps) => {
     loadBooks();
   }, [fetchBooks, currentBookId]);
   return (
-    <section className="content ml-[5vw] mr-[5vw] py-8">
+    <section className="content ml-[5vw] mr-[5vw] py-10">
       <h2 className="text-3xl mb-4 font-bold font-title">{title}</h2>
       <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
         {bookList.map((book) => {

@@ -2,33 +2,10 @@ import type { IBooks, IBook, ICategory } from "../@types";
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
-interface IBookQueryParams {
-  [key: string]: string | number | boolean | undefined;
-}
-
-export async function getAllBooks(params: IBookQueryParams = {}): Promise<IBooks> {
-  const urlParams = new URLSearchParams();
-
-  // transform params in url as an object like [key, value]
-  const paramsObject = Object.entries(params);
-
-  paramsObject.forEach(([key, value]) => {
-    // check if the value is undefined or null
-    if (value !== undefined && value !== null) {
-      // convert value into string and add it into URL params
-      urlParams.append(key, value.toString());
-    }
-  });
-
-  // convert urlParams object into a string
-  const urlString = urlParams.toString();
-
-  // add params in the API request if exists
-  const newUrl = `${apiBaseUrl}/books/${urlString ? `?${urlString}` : ""}`;
-
+export async function getAllBooks(): Promise<IBooks> {
   try {
     // request to the new url
-    const response = await fetch(newUrl);
+    const response = await fetch(`${apiBaseUrl}/books`);
     if (!response.ok) {
       throw new Error(`Erreur lors de la récupération des livres: ${response.statusText}`);
     }
@@ -128,9 +105,9 @@ export async function getBooksByCategory(id: number): Promise<IBook[]> {
 }
 
 /**
- * Function to fetch all categories.
+ * Function to fetch top rated books.
  *
- * @returns {Promise<ICategory[]>} - A promise that resolves to an array of category objects.
+ * @returns {Promise<IBook[]>} - A promise that resolves to an array of book objects.
  * @throws {Error} - Throws an error if the request fails or if there is an issue with the network.
  */
 export async function getTopRatedBooks(): Promise<IBook[]> {
@@ -141,14 +118,40 @@ export async function getTopRatedBooks(): Promise<IBook[]> {
     const response = await fetch(url);
 
     if (!response.ok) {
-      throw new Error(`Erreur lors de la récupération des catégories: ${response.statusText}`);
+      throw new Error(`Erreur lors de la récupération des livres: ${response.statusText}`);
     }
     const topBooks = (await response.json()) as IBook[];
     console.log(topBooks);
 
     return topBooks;
   } catch (error) {
-    console.error("Erreur lors de la récupération des catégories:", error);
+    console.error("Erreur lors de la récupération des livres:", error);
+    throw error;
+  }
+}
+
+/**
+ * Function to fetch 5 random books.
+ *
+ * @returns {Promise<IBook[]>} - A promise that resolves to an array of book objects.
+ * @throws {Error} - Throws an error if the request fails or if there is an issue with the network.
+ */
+export async function getRandomBooks(): Promise<IBook[]> {
+  // Request parameters optimized to fetch only categories
+  const url = `${apiBaseUrl}/books?random=true`;
+
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`Erreur lors de la récupération des livres: ${response.statusText}`);
+    }
+    const randomBooks = (await response.json()) as IBook[];
+    console.log(randomBooks);
+
+    return randomBooks;
+  } catch (error) {
+    console.error("Erreur lors de la récupération des livres:", error);
     throw error;
   }
 }
