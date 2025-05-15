@@ -112,7 +112,7 @@ export async function getAllCategories(): Promise<ICategory[]> {
  * @returns {Promise<ICategoryBooks | null>} - A promise that resolves to a category object with books or `null` if the request fails.
  * @throws {Error} - Throws an error if the request fails or if there is an issue with the network.
  */
-export async function getBooksByCategories(id: number): Promise<IBook[]> {
+export async function getBooksByCategory(id: number): Promise<IBook[]> {
   const url = `${apiBaseUrl}/books?categoryId=${id}`;
   try {
     const response = await fetch(url);
