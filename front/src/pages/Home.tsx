@@ -1,4 +1,4 @@
-import { getTopRatedBooks } from "../api/apiBooks";
+import { getRandomBooks, getTopRatedBooks } from "../api/apiBooks";
 import BookGrid from "../components/BookGrid";
 import PresentationPage from "../components/Presentation";
 

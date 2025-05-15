@@ -1,5 +1,6 @@
 import { Book, Category } from "../models/associations.js";
 import { Op, where } from "sequelize";
+import Sequelize from "sequelize";
 import { ApiError } from "../middlewares/ApiError.js";
 
 const bookController = {
@@ -12,7 +13,7 @@ const bookController = {
    * @returns {Array} - Object
    */
   async getAllBooks(req, res, next) {
-    const { search, categoryId, categoryName, onlyCategories, topRated } = req.query; // get query
+    const { search, categoryId, categoryName, onlyCategories, topRated, random } = req.query; // get query
 
     const whereConditions = {};
 
@@ -27,6 +28,7 @@ const bookController = {
         return next(error);
       }
     }
+
     // get top rated books if asking in URL
     if (topRated === "true") {
       try {
@@ -47,6 +49,20 @@ const bookController = {
         return next(error);
       }
     }
+
+    // get random books if asking in URL
+    if (random === "true") {
+      try {
+        const randomBooks = await Book.findAll({
+          order: [Sequelize.literal("RANDOM()")],
+          limit: 5,
+        });
+        return res.status(200).json(randomBooks);
+      } catch (error) {
+        return next(error);
+      }
+    }
+
     // filter by author or name
     if (search) {
       whereConditions[Op.or] = [

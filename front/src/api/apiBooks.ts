@@ -111,7 +111,7 @@ export async function getBooksByCategory(id: number): Promise<IBook[]> {
  * @throws {Error} - Throws an error if the request fails or if there is an issue with the network.
  */
 export async function getTopRatedBooks(): Promise<IBook[]> {
-  // Request parameters optimized to fetch only categories
+  // Request parameters optimized to fetch only top rated books
   const url = `${apiBaseUrl}/books?topRated=true`;
 
   try {
@@ -121,8 +121,6 @@ export async function getTopRatedBooks(): Promise<IBook[]> {
       throw new Error(`Erreur lors de la récupération des livres: ${response.statusText}`);
     }
     const topBooks = (await response.json()) as IBook[];
-    console.log(topBooks);
-
     return topBooks;
   } catch (error) {
     console.error("Erreur lors de la récupération des livres:", error);
@@ -137,7 +135,7 @@ export async function getTopRatedBooks(): Promise<IBook[]> {
  * @throws {Error} - Throws an error if the request fails or if there is an issue with the network.
  */
 export async function getRandomBooks(): Promise<IBook[]> {
-  // Request parameters optimized to fetch only categories
+  // Request parameters optimized to fetch only 5 random books
   const url = `${apiBaseUrl}/books?random=true`;
 
   try {
@@ -147,8 +145,6 @@ export async function getRandomBooks(): Promise<IBook[]> {
       throw new Error(`Erreur lors de la récupération des livres: ${response.statusText}`);
     }
     const randomBooks = (await response.json()) as IBook[];
-    console.log(randomBooks);
-
     return randomBooks;
   } catch (error) {
     console.error("Erreur lors de la récupération des livres:", error);
