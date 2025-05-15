@@ -15,14 +15,12 @@ const PresentationPage = () => {
           <p className="text-lg text-gray-700 leading-relaxed">
             BlaBlaBook est une plateforme communautaire dédiée aux passionnés de
             lecture. Ici, vous pouvez explorer une large sélection de livres,
-            noter ceux que vous avez lus, sauvegarder ceux que vous souhaitez
-            lire, et surtout... partager vos avis avec d'autres lecteurs !
+            sauvegarder ceux que vous souhaitez lire ou ceux que vous avez déjà lu !
           </p>
           <p className="text-lg text-gray-700 leading-relaxed mt-4">
             Que vous soyez fan de fantasy, amateur de romans policiers ou
             curieux de découvertes littéraires, notre bibliothèque s’adapte à
-            tous les goûts. Rejoignez la communauté, échangez autour des livres,
-            et ne laissez jamais un bon livre sans un bon avis.
+            tous les goûts.
           </p>
         </div>
         <div className="mt-8 flex justify-center gap-4">

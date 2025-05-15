@@ -43,30 +43,3 @@ router.get("/dashboard/categories", authMiddleware, isAdminMiddleware, dashboard
  * @return {Error} - Error if the request fails.
  */
 router.get("/dashboard/authors", authMiddleware, isAdminMiddleware, dashboardController.getAllAuthors);
-
-/**
- * GET route to retrieve all reviews (admin only).
- *
- * @summary Get all reviews in the system.
- * @route GET /dashboard/reviews
- * @middleware authMiddleware - Ensures the user is authenticated.
- * @middleware isAdminMiddleware - Ensures the user is an admin.
- * @controller dashboardController.getAllReview - Handles retrieving all reviews.
- * @return {Object} - The list of all reviews in the system.
- * @return {Error} - Error if the request fails.
- */
-router.get("/dashboard/reviews", authMiddleware, isAdminMiddleware, dashboardController.getAllReview);
-
-/**
- * GET route to retrieve reviews made by a specific user (admin only).
- *
- * @summary Get all reviews made by a specific user.
- * @route GET /dashboard/user/:userId/reviews
- * @middleware authMiddleware - Ensures the user is authenticated.
- * @middleware isAdminMiddleware - Ensures the user is an admin.
- * @controller dashboardController.getReviewsByUser - Handles retrieving the user's reviews.
- * @return {Object} - The list of reviews made by the user.
- * @return {Error} - Error if the request fails.
- */
-router.get("/dashboard/user/:userId/reviews", authMiddleware, isAdminMiddleware, dashboardController.getReviewsByUser);
-
