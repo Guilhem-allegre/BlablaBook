@@ -195,6 +195,7 @@ const BookDetail = () => {
               - Includes appropriate icon based on status */}
           <button
             onClick={!isRead ? handleAddRead : handleRemoveRead}
+            aria-label="Ajouter à la liste 'lu'"
             className={`flex items-center gap-2 ${
               isRead && !toRead ? `bg-green-300 hover:bg-green-200 ${!toRead}` : "bg-gray-300 hover:bg-gray-200"
             }  rounded justify-center w-40 py-2 cursor-pointer`}
@@ -208,6 +209,7 @@ const BookDetail = () => {
               - Uses different handlers depending on current state */}
           <button
             onClick={!toRead ? handleWishRead : handleRemoveWishRead}
+            aria-label="Ajouter à la liste 'à lire'"
             className={`flex items-center gap-2 ${
               toRead && !isRead ? "bg-green-300 hover:bg-green-200" : "bg-gray-300 hover:bg-gray-200"
             } rounded justify-center w-40 py-2 cursor-pointer`}
