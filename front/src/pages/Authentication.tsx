@@ -5,6 +5,9 @@ import { IRegister, IError } from "../@types/auth";
 import { registerUser } from "../api/apiAuth";
 import { toastError } from "../utils/toast/toastError";
 import { toastSuccess } from "../utils/toast/toastSuccess";
+import Seo from "../components/Seo";
+
+const baseUrl = import.meta.env.VITE_API_BASE_URL; 
 
 const Authentication = () => {
   const [registerData, setRegisterData] = useState<IRegister>({
@@ -46,14 +49,21 @@ const Authentication = () => {
   };
 
   return (
-    <section className="pb-14 md:pb-6">
-      <Login />
-      <Register
-        data={registerData}
-        onChange={setRegisterData}
-        onSubmit={handleRegister}
+    <>
+      <Seo
+      title="Authentification"
+      description="Page pour vous connecter/enregistrer sur le site"
+      url={`${baseUrl}/auth`}
       />
-    </section>
+      <section className="pb-14 md:pb-6">
+        <Login />
+        <Register
+          data={registerData}
+          onChange={setRegisterData}
+          onSubmit={handleRegister}
+        />
+      </section>
+    </>
   );
 };
 
