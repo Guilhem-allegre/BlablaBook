@@ -1,4 +1,4 @@
-import { Book } from "../models/associations.js"
+import { Book, Category } from "../models/associations.js";
 import { Op } from "sequelize";
 import { ApiError } from "../middlewares/ApiError.js";
 
@@ -12,12 +12,20 @@ const bookController = {
    * @returns {Array} - Object
    */
   async getAllBooks(req, res, next) {
-    const { search, categoryId, categoryName } = req.query; // get query
+    const { search, categoryId, categoryName, onlyCategories } = req.query; // get query
 
     const whereConditions = {};
 
     const includeOptions = [{ association: "categories" }, { association: "authors" }];
 
+    if (onlyCategories === "true") {
+      try {
+        const categories = await Category.findAll();
+        return res.status(200).json(categories);
+      } catch (error) {
+        return next(error);
+      }
+    }
     // filter by author or name
     if (search) {
       whereConditions[Op.or] = [

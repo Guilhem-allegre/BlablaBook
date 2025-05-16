@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ICategoryBooks } from "../@types";
+import { IBook } from "../@types";
 import { useErrorHandler } from "../utils/useErrorHandler";
 import { getBooksByCategories } from "../api/apiBooks";
 
 export default function CategoryPage() {
-  const [booksCategories, setBooksCategories] = useState<ICategoryBooks | null>(null);
+  const [booksCategories, setBooksCategories] = useState<IBook[]>([]);
   const { handleError } = useErrorHandler();
   const { categoryId } = useParams();
 
@@ -19,7 +19,6 @@ export default function CategoryPage() {
       }
     }
     loadBooks();
-    console.log(loadBooks());
   }, [categoryId]);
 
   return (
@@ -33,10 +32,12 @@ export default function CategoryPage() {
             {/* Contenu principal avec marge à gauche */}{" "}
             {/* Ajoute une marge à gauche sur les écrans md et plus grands */}
             <section className="content ml-[5vw] mr-[5vw] pb-20 ">
-              <h2 className="text-2xl mb-4 font-title font-bold">Tous Nos Livres du genre : {booksCategories?.name}</h2>
+              <h2 className="text-2xl mb-4 font-title font-bold">
+                Tous Nos Livres du genre : {booksCategories[0]?.categories?.[0]?.name}
+              </h2>
               <div className="book-list grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:grid-cols-5">
                 {/* loop on books */}
-                {booksCategories?.books.map((book) => (
+                {booksCategories.map((book) => (
                   <Link to={`/books/${book.id}`} key={book.id} className="block">
                     <div className="book cursor-pointer hover:shadow-lg hover:rounded-md transition-shadow text-center">
                       <img

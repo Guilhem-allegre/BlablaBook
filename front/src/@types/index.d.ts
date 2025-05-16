@@ -42,6 +42,7 @@ export interface IUserUpdate {
   name?: string;
   email?: string;
   currentPassword?: string;
+  confirmPassword?: string;
   password?: string;
 }
 
@@ -57,4 +58,9 @@ export interface IBookFromCategory {
   published: number | null;
   cover_url: string | null;
   page_count: number;
+}
+
+interface IBookWithCategories {
+  id: number;
+  categories: ICategory[];
 }

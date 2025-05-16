@@ -54,81 +54,81 @@ export default function About() {
       >
         <div className="w-full h-auto">
           <img
-            srcSet="front_cover.webp 495w, front_cover_mobile.webp 354w"
+            srcSet="/img/about/front_cover.webp 495w, /img/about/front_cover_mobile.webp 354w"
             sizes="(max-width: 550px) 354px, 495px"
-            src="/front_cover.webp"
+            src="/img/about/front_cover.webp"
             alt=""
           />
         </div>
         <div className="w-full h-auto">
           <img
-            srcSet="presentation.webp 495w, presentation_mobile.webp 354w"
+            srcSet="/img/about/presentation.webp 495w, /img/about/presentation_mobile.webp 354w"
             sizes="(max-width: 550px) 354px, 495px"
-            src="/presentation.webp"
+            src="/img/about/presentation.webp"
             alt=""
           />
         </div>
         <div className="w-full h-auto">
           <img
-            srcSet="presentation_2.webp 495w, presentation_2_mobile.webp 354w"
+            srcSet="/img/about/presentation_2.webp 495w, /img/about/presentation_2_mobile.webp 354w"
             sizes="(max-width: 550px) 354px, 495px"
-            src="/presentation_2.webp"
+            src="/img/about/presentation_2.webp"
             alt=""
           />
         </div>
         <div className="w-full h-auto">
           <img
-            srcSet="bounabassa.webp 495w, bounabassa_mobile.webp 354w"
+            srcSet="/img/about/bounabassa.webp 495w, /img/about/bounabassa_mobile.webp 354w"
             sizes="(max-width: 550px) 354px, 495px"
-            src="/bounabassa.webp"
+            src="/img/about/bounabassa.webp"
             alt=""
           />
         </div>
         <div className="w-full h-auto">
           <img
-            srcSet="guilhem.webp 495w, guilhem_mobile.webp 354w"
+            srcSet="/img/about/guilhem.webp 495w, /img/about/guilhem_mobile.webp 354w"
             sizes="(max-width: 550px) 354px, 495px"
-            src="/guilhem.webp"
+            src="/img/about/guilhem.webp"
             alt=""
           />
         </div>
         <div className="w-full h-auto">
           <img
-            srcSet="axel.webp 495w, axel_mobile.webp 354w"
+            srcSet="/img/about/axel.webp 495w, /img/about/axel_mobile.webp 354w"
             sizes="(max-width: 550px) 354px, 495px"
-            src="/axel.webp"
+            src="/img/about/axel.webp"
             alt=""
           />
         </div>
         <div className="w-full h-auto">
           <img
-            srcSet="amandine.webp 495w, amandine_mobile.webp 354w"
+            srcSet="/img/about/amandine.webp 495w, /img/about/amandine_mobile.webp 354w"
             sizes="(max-width: 550px) 354px, 495px"
-            src="/amandine.webp"
+            src="/img/about/amandine.webp"
             alt=""
           />
         </div>
         <div className="w-full h-auto">
           <img
-            srcSet="mickael.webp 495w, mickael_mobile.webp 354w"
+            srcSet="/img/about/mickael.webp 495w, /img/about/mickael_mobile.webp 354w"
             sizes="(max-width: 550px) 354px, 495px"
-            src="/mickael.webp"
+            src="/img/about/mickael.webp"
             alt=""
           />
         </div>
         <div className="w-full h-auto">
           <img
-            srcSet="epilogue.webp 495w, epilogue_mobile.webp 354w"
+            srcSet="/img/about/epilogue.webp 495w, /img/about/epilogue_mobile.webp 354w"
             sizes="(max-width: 550px) 354px, 495px"
-            src="/epilogue.webp"
+            src="/img/about/epilogue.webp"
             alt=""
           />
         </div>
         <div className="w-full h-auto">
           <img
-            srcSet="back_cover.webp 495w, back_cover_mobile.webp 354w"
+            srcSet="/img/about/back_cover.webp 495w, /img/about/back_cover_mobile.webp 354w"
             sizes="(max-width: 550px) 354px, 495px"
-            src="/back_cover.webp"
+            src="/img/about/back_cover.webp"
             alt=""
           />
         </div>

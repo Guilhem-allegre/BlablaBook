@@ -150,9 +150,7 @@ const BookDetail = () => {
         );
 
         // Check if the current user wants to read the book
-        const wantsToRead = newBook.users_need_to_read.some(
-          (user) => user.id === userId
-        );
+        const wantsToRead = newBook.users_need_to_read.some((user) => user.id === userId);
 
         setIsRead(hasRead);
         setToRead(wantsToRead);
@@ -181,22 +179,20 @@ const BookDetail = () => {
     <div className="bg-body flex flex-col p-4 items-center sm:flex-col ml:flex-row lg:ml-0 xl:ml-64 md:p-8 md:gap-8 mt-5 font-body tracking-wider [word-spacing:2px]">
       <img
         src={`https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/${book.cover_url}.jpg`}
-        alt={`${book.title}`}
-        className="w-30 mr-5 h-auto mb-4 md:w-60"
+        alt={`Couverture du livre : ${book.title}`}
+        className="w-60 mr-5 h-auto mb-4"
       />
 
       <div className="text-sm md:text-base max-w-xl">
         <p>
-          <span className="font-bold font-title text:2xl">Par :</span>{" "}
-          {/* Join author names if there are multiple */}
+          <span className="font-bold font-title text:2xl">Par :</span> {/* Join author names if there are multiple */}
           {book.authors.map((auth) => auth.name).join(", ")}
         </p>
 
         <h1 className="text-xl font-title font-bold mb-2">{book.title}</h1>
 
         <p>
-          <span className="font-bold font-title">Catégorie :</span>{" "}
-          {/* Join category names if there are multiple */}
+          <span className="font-bold font-title">Catégorie :</span> {/* Join category names if there are multiple */}
           {book.categories.map((cat) => cat.name).join(", ")}
         </p>
 
@@ -215,10 +211,9 @@ const BookDetail = () => {
               - Includes appropriate icon based on status */}
           <button
             onClick={!isRead ? handleAddRead : handleRemoveRead}
+            aria-label="Ajouter à la liste 'lu'"
             className={`flex items-center gap-2 ${
-              isRead && !toRead
-                ? `bg-green-300 hover:bg-green-200 ${!toRead}`
-                : "bg-gray-300 hover:bg-gray-200"
+              isRead && !toRead ? `bg-green-300 hover:bg-green-200 dark:bg-green-600 dark:hover:bg-green-400 ${!toRead}` : "bg-gray-300 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400"
             }  rounded justify-center w-40 py-2 cursor-pointer`}
           >
             <i
@@ -236,11 +231,10 @@ const BookDetail = () => {
               - Uses different handlers depending on current state */}
           <button
             onClick={!toRead ? handleWishRead : handleRemoveWishRead}
+            aria-label="Ajouter à la liste 'à lire'"
             className={`flex items-center gap-2 ${
-              toRead && !isRead
-                ? "bg-green-300 hover:bg-green-200"
-                : "bg-gray-300 hover:bg-gray-200"
-            } rounded justify-center w-40 py-2 cursor-pointer`}
+              toRead && !isRead ? "bg-green-300 hover:bg-green-200 dark:bg-green-600 dark:hover:bg-green-400" : "bg-gray-300 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400"
+            } rounded justify-center w-40 py-2 cursor-pointer `}
           >
             <i className="fa-solid fa-book-open-reader"></i>
             <span>À Lire</span>

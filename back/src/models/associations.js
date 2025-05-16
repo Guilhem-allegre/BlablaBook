@@ -3,7 +3,6 @@ import { Author } from "./Author.js";
 import { Book } from "./Book.js";
 import { Category } from "./Category.js";
 import { User } from "./User.js";
-import { Review } from "./Review.js";
 
 Book.belongsToMany(Author, {
   through: "book_has_author",
@@ -61,30 +60,4 @@ User.belongsToMany(Book, {
   otherKey: "book_id",
 });
 
-// User <--> Review (One-To-Many)
-User.hasMany(Review,
-  {
-    foreignKey: "user_id",
-    as: "reviews",
-    onDelete: "CASCADE" // Delete your reviews
-  });
-Review.belongsTo(User,
-  {
-    foreignKey: "user_id",
-    as: "users"
-  });
-
-// Book <--> Review (One-To-Many)
-Book.hasMany(Review,
-  {
-    foreignKey: "book_id",
-    as: "reviews",
-    onDelete: "CASCADE" // Delete your reviews
-  });
-Review.belongsTo(Book,
-  {
-    foreignKey: "book_id",
-    as: "books"
-  });
-
-export { Author, Book, Category, User, Review, sequelize };
+export { Author, Book, Category, User, sequelize };

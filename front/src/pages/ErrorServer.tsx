@@ -4,10 +4,12 @@ export default function ErrorServer() {
   return (
     <div className="bg-body flex flex-col items-center justify-center h-max  md:ml-64 ">
       <h1 className="font-title text-9xl text-center font-black p-7">500</h1>
-      <img className="w-120 mt-4 mx-auto" src="/error500_femme.webp" alt="" />
-      <p className="font-title text-6xl text-center font-bold pt-6 ">
-        Catastrophe - Littéraire !
-      </p>
+      <img
+        className="w-120 mt-4 mx-auto"
+        src="/img/errorPage/error500_femme.webp"
+        alt="Femme utilisant un extincteur pour éteindre un livre en feu"
+      />
+      <p className="font-title text-6xl text-center font-bold pt-6 ">Catastrophe - Littéraire !</p>
       <p className="font-body text-2xl text-center p-6">
         Il semblerait que notre bibliothèque soit indisponible pour le moment...
       </p>
