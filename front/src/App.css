@@ -2,6 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap");
 
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --color-body: #faf4e8;
@@ -12,6 +13,13 @@
   --font-body: "Merriweather", serif;
   --breakpoint-xs: 31.25rem; /* 500 px */
   --breakpoint-ml: 59.375rem; /* 950 px */
+}
+
+.dark {
+  --color-body: #252d49;
+  --color-sidebar: #2E3440;
+  --color-header: #1C1C26;
+  --color-placeholder: #faf4e8;
 }
 
 .iziToast-wrapper.iziToast-wrapper-topRight {

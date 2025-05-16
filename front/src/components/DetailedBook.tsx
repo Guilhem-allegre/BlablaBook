@@ -197,7 +197,7 @@ const BookDetail = () => {
             onClick={!isRead ? handleAddRead : handleRemoveRead}
             aria-label="Ajouter à la liste 'lu'"
             className={`flex items-center gap-2 ${
-              isRead && !toRead ? `bg-green-300 hover:bg-green-200 ${!toRead}` : "bg-gray-300 hover:bg-gray-200"
+              isRead && !toRead ? `bg-green-300 hover:bg-green-200 dark:bg-green-600 dark:hover:bg-green-400 ${!toRead}` : "bg-gray-300 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400"
             }  rounded justify-center w-40 py-2 cursor-pointer`}
           >
             <i className={`${isRead && !toRead ? "fa-solid fa-square-check" : "fa-solid fa-square-xmark"}`}></i>
@@ -211,8 +211,8 @@ const BookDetail = () => {
             onClick={!toRead ? handleWishRead : handleRemoveWishRead}
             aria-label="Ajouter à la liste 'à lire'"
             className={`flex items-center gap-2 ${
-              toRead && !isRead ? "bg-green-300 hover:bg-green-200" : "bg-gray-300 hover:bg-gray-200"
-            } rounded justify-center w-40 py-2 cursor-pointer`}
+              toRead && !isRead ? "bg-green-300 hover:bg-green-200 dark:bg-green-600 dark:hover:bg-green-400" : "bg-gray-300 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400"
+            } rounded justify-center w-40 py-2 cursor-pointer `}
           >
             <i className="fa-solid fa-book-open-reader"></i>
             <span>À Lire</span>
