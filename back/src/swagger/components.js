@@ -559,3 +559,78 @@
 */
 
 // User Library
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     BookShort:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 12
+ *         title:
+ *           type: string
+ *           example: Le Nom du Vent
+ *
+ *     UserLibrary:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 42
+ *         name:
+ *           type: string
+ *           example: Alice Martin
+ *         email:
+ *           type: string
+ *           format: email
+ *           example: alice@example.com
+ *         books_already_read:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/BookShort'
+ *         books_wish_read:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/BookShort'
+
+ *     UnauthorizedError:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *           example: Non autorisé !
+
+ *     UserNotFound:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *           example: Utilisateur non trouvé
+ */
+
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     AddToReadListSuccess:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *           example: Livre ajouté à la liste des livres lus
+ */
+
+// /user/books/to-read/:bookId
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     AddToWishReadSuccess:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *           example: Livre ajouté à la liste des livres à lire
+ */

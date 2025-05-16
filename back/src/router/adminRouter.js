@@ -17,8 +17,9 @@ export const router = Router();
  * /admin/add/books:
  *   post:
  *     summary: Ajouter un nouveau livre
- *     description: Crée un nouveau livre dans la base de données s'il n'existe pas déjà (vérification via ISBN).
- *      security:
+ *     description: >
+ *       Crée un nouveau livre dans la base de données s'il n'existe pas déjà (vérification via ISBN).
+ *     security:
  *       - bearerAuth: []
  *     tags:
  *       - Admin
@@ -42,6 +43,7 @@ export const router = Router();
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
+
 router.post(
   "/admin/add/books",
   authMiddleware,
@@ -55,7 +57,8 @@ router.post(
  * /admin/update/books/:bookId:
  *   patch:
  *     summary: Met à jour les informations d’un livre existant
- *     description: Met à jour un livre par ID. Seules les propriétés spécifiées dans la requête seront modifiées.
+ *     description: >
+ *       Met à jour un livre par ID. Seules les propriétés spécifiées dans la requête seront modifiées.
  *     security:
  *       - bearerAuth: []
  *     tags:
@@ -100,7 +103,8 @@ router.patch(
  * /admin/delete/books/{bookId}:
  *   delete:
  *     summary: Supprime un livre
- *     description: Supprime un livre existant dans la base de données selon son ID.
+ *     description: >
+ *      Supprime un livre existant dans la base de données selon son ID.
  *     security:
  *       - bearerAuth: []
  *     tags:
@@ -135,7 +139,8 @@ router.delete(
  * /admin/add/categories:
  *   post:
  *     summary: Ajouter une nouvelle catégorie
- *     description: Crée une catégorie si elle n'existe pas encore (vérification par nom).
+ *     description: >
+ *      Crée une catégorie si elle n'existe pas encore (vérification par nom).
  *     security:
  *       - bearerAuth: []
  *     tags:
@@ -174,7 +179,8 @@ router.post(
  * /admin/update/categories/{categoryId}:
  *   patch:
  *     summary: Met à jour une catégorie existante
- *     description: Met à jour le nom d'une catégorie à partir de son ID.
+ *     description: >
+ *      Met à jour le nom d'une catégorie à partir de son ID.
  *     security:
  *       - bearerAuth: []
  *     tags:
@@ -220,7 +226,8 @@ router.patch(
  * /admin/delete/categories/{categoryId}:
  *   delete:
  *     summary: Supprimer une catégorie
- *     description: Supprime une catégorie existante à partir de son ID.
+ *     description: >
+ *      Supprime une catégorie existante à partir de son ID.
  *     security:
  *       - bearerAuth: []
  *     tags:
@@ -255,7 +262,8 @@ router.delete(
  * /admin/add/authors:
  *   post:
  *     summary: Ajouter un nouvel auteur
- *     description: Crée un nouvel auteur si le nom n'existe pas déjà (insensible à la casse).
+ *     description: >
+ *      Crée un nouvel auteur si le nom n'existe pas déjà (insensible à la casse).
  *     security:
  *       - bearerAuth: []
  *     tags:
@@ -293,7 +301,8 @@ router.post(
  * /admin/update/authors/{authorId}:
  *   patch:
  *     summary: Met à jour le nom d’un auteur existant
- *     description: Modifie le nom d’un auteur identifié par son ID.
+ *     description: >
+ *      Modifie le nom d’un auteur identifié par son ID.
  *     security:
  *       - bearerAuth: []
  *     tags:
@@ -338,7 +347,8 @@ router.patch(
  * /admin/delete/authors/{authorId}:
  *   delete:
  *     summary: Supprime un auteur par ID
- *     description: Supprime un auteur existant identifié par son ID.
+ *     description: >
+ *      Supprime un auteur existant identifié par son ID.
  *     security:
  *       - bearerAuth: []
  *     tags:
