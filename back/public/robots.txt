@@ -1,0 +1,10 @@
+User-agent: *
+Disallow:
+
+Disallow: /auth/
+Disallow: /user/settings/
+Disallow: /logout/
+Disallow: /profile/
+
+ pages
+Sitemap: https://www.blablabook.com/sitemap.xml
