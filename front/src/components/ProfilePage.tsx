@@ -4,6 +4,9 @@ import { IUser } from "../@types";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../utils/store/useAuthStore";
 import UserBookGrid from "../components/UserBookGrid";
+import Seo from "./Seo.tsx";
+
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const ProfilePage = () => {
   const [localUser, setLocalUser] = useState<IUser | null>(null);
@@ -39,6 +42,7 @@ const ProfilePage = () => {
 
   return (
     <>
+       <Seo title="Profil" description="Votre profil" url={`${baseUrl}/profile`} />
       <div className="pt-8 content ml-[5vw] mr-[5vw] pb-10 md:pb-8">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-4xl font-bold font-title">{user?.name}</h1>
