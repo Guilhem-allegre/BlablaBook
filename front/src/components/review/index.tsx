@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import AverageRating from "./AverageRating";
 import Ratings from "./Ratings";
-import { ReviewApiResponse } from "../../@types/review";
+import { Review, ReviewApiResponse } from "../../@types/review";
 import { useParams } from "react-router-dom";
 import { getReviewsByBook } from "../../api/apiReview";
 import ReviewModal from "./ReviewModal";
@@ -12,7 +12,7 @@ import OpenModal from "./OpenModal";
  *
  * @returns {JSX.Element} - The rendered review.
  */
-const Review = () => {
+const ReviewSection = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reviewData, setReviewData] = useState<ReviewApiResponse | null>(null);
   const [loading, setLoading] = useState(true);
@@ -20,8 +20,10 @@ const Review = () => {
   const numericBookId = Number(bookId);
 
   const fetchData = async () => {
+    setLoading(true);
     try {
       const data = await getReviewsByBook(numericBookId);
+      console.log("Nouvelles données reçues :", data);
       setReviewData(data);
     } catch (err) {
       console.error("Erreur API:", err);
@@ -42,6 +44,20 @@ const Review = () => {
     return <p className="text-center">Aucun avis pour ce livre.</p>;
   }
 
+  const allReviews: Review[] = [
+    ...(reviewData.rating
+      ? [
+          {
+            ...reviewData.rating,
+            title: null,
+            comment: null,
+            book_id: reviewData.book_id,
+          } as Review,
+        ]
+      : []),
+    ...reviewData.comments,
+  ];
+
   return (
     <section className="py-24 relative font-body">
       <div className="max-w-7xl mx-auto px-4">
@@ -51,13 +67,15 @@ const Review = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <Ratings reviews={reviewData.comments} />
+            <Ratings reviews={allReviews} />
           </div>
 
           <div className="flex items-center justify-center">
             <AverageRating
               value={reviewData.rating?.rating ?? 0}
-              subtitle={`${reviewData.comments.length} avis`}
+              subtitle={`${
+                reviewData.comments.length + (reviewData.rating ? 1 : 0)
+              } avis`}
             />
           </div>
 
@@ -94,4 +112,4 @@ const Review = () => {
   );
 };
 
-export default Review;
+export default ReviewSection;

@@ -50,18 +50,18 @@ const reviewController = {
           updatedAt: existingRating.updatedAt,
         };
       } else {
-        await Review.create({
+        const newRating = await Review.create({
           rating,
           book_id: bookId,
           user_id: userId,
         });
         reviews.updatedRating = {
-          id: existingRating.id,
-          rating: existingRating.rating,
-          user_id: existingRating.user_id,
-          book_id: existingRating.book_id,
-          createdAt: existingRating.createdAt,
-          updatedAt: existingRating.updatedAt,
+          id: newRating.id,
+          rating: newRating.rating,
+          user_id: newRating.user_id,
+          book_id: newRating.book_id,
+          createdAt: newRating.createdAt,
+          updatedAt: newRating.updatedAt,
         };
       }
     }

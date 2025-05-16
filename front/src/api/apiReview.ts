@@ -16,22 +16,18 @@ export const getReviewsByBook = async (bookId: number): Promise<ReviewApiRespons
 };
 
 /**
- * 
- * @param bookId 
- * @param payload 
- * @param token 
+ * Post a new review or rating for a book.
+ *
+ * @param {number} bookId - The ID of the book to review.
+ * @param {NewReviewPayload} payload - The review content.
+ * @returns {Promise<void>} - Resolves if the request is successful.
  */
 export const postReview = async (
   bookId: number,
-  payload: NewReviewPayload,
-  token: string
+  payload: NewReviewPayload
 ): Promise<void> => {
-  const res = await fetch(`http://localhost:3000/user/books/${bookId}/review`, {
+  const res = await authFetch(`http://localhost:3000/user/books/${bookId}/review`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`, // Ton middleware auth l'exige
-    },
     body: JSON.stringify(payload),
   });
 

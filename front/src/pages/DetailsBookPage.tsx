@@ -8,7 +8,7 @@ import { toastSuccess, toastInfo, toastWarning } from "../utils/toast/toastSucce
 import { useAuthStore } from "../utils/store/useAuthStore";
 import BookGrid from "../components/BookGrid";
 import Seo from "../components/Seo";
-import Review from "../components/review";
+import ReviewSection from "../components/review";
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -230,7 +230,7 @@ const DetailsBookPage = () => {
         </div>
       </div>
       {/* Review */}
-      <Review />
+      <ReviewSection />
       {/* <RecommendedBooks /> */}
       <BookGrid
         title="Ces livres peuvent aussi vous plaire"

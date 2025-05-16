@@ -26,18 +26,16 @@ const ReviewModal = ({ isOpen, onClose, bookId, onReviewAdded }: IReviewModalPro
     setLoading(true);
 
     try {
-      const token = localStorage.getItem("token"); // ou autre selon ton auth
-      if (!token) throw new Error("Utilisateur non authentifié");
-
       const payload: NewReviewPayload = {
         title: title || undefined,
         comment: comment || undefined,
         rating: rating ?? undefined,
       };
 
-      await postReview(bookId, payload, token);
-      onClose(); // ferme la modale
-      onReviewAdded(); // recharge les données
+      await postReview(bookId, payload);
+      console.log("Avis ajouté !")
+      onClose();
+      onReviewAdded();
       setTitle("");
       setComment("");
       setRating(null);
