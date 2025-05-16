@@ -4,6 +4,7 @@ import Ratings from "./Ratings";
 import { ReviewApiResponse } from "../../@types/review";
 import { useParams } from "react-router-dom";
 import { getReviewsByBook } from "../../api/apiReview";
+import ReviewModal from "./ReviewModal";
 
 /**
  * ReviewS component that displays ratings, reviews, and review actions.
@@ -11,6 +12,7 @@ import { getReviewsByBook } from "../../api/apiReview";
  * @returns {JSX.Element} - The rendered review.
  */
 const Review = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [reviewData, setReviewData] = useState<ReviewApiResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const { bookId } = useParams();
@@ -67,8 +69,12 @@ const Review = () => {
           {reviewData.comments.map((comment) => (
             <div key={comment.id} className="border-b pb-4 mb-4">
               <p className="font-semibold">{comment.user.name}</p>
-              {comment.title && <h4 className="font-bold text-lg">{comment.title}</h4>}
-              {comment.comment && <p className="text-gray-700">{comment.comment}</p>}
+              {comment.title && (
+                <h4 className="font-bold text-lg">{comment.title}</h4>
+              )}
+              {comment.comment && (
+                <p className="text-gray-700">{comment.comment}</p>
+              )}
               <p className="text-sm text-gray-400">
                 {new Date(comment.createdAt).toLocaleDateString()}
               </p>
@@ -76,6 +82,8 @@ const Review = () => {
           ))}
         </div>
       </div>
+      {/* Modal */}
+      <ReviewModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   );
 };
