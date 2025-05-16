@@ -5,8 +5,9 @@ interface IReview {
   id: string;
   username: string;
   date: string;
-  rating: number;
-  content: string;
+  rating?: number;
+  title?: string;
+  comment?: string;
 }
 
 interface IReviewListProps {
@@ -40,7 +41,8 @@ const ReviewList = ({ reviews, perPage = 2 }: IReviewListProps) => {
           username={review.username}
           date={review.date}
           rating={review.rating}
-          review={review.content}
+          title={review.title}
+          comment={review.comment}
         />
       ))}
 

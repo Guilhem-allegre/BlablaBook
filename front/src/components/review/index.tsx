@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { getReviewsByBook } from "../../api/apiReview";
 import ReviewModal from "./ReviewModal";
 import OpenModal from "./OpenModal";
+import ReviewList from "./ReviewList";
 
 /**
  * ReviewS component that displays ratings, reviews, and review actions.
@@ -43,6 +44,31 @@ const ReviewSection = () => {
   if (!reviewData) {
     return <p className="text-center">Aucun avis pour ce livre.</p>;
   }
+
+  const userRatingsMap = new Map<number, number>();
+  if (reviewData.rating) {
+    userRatingsMap.set(reviewData.rating.user.id, reviewData.rating.rating);
+  }
+  reviewData.comments.forEach((r) => {
+    if (r.rating !== null) {
+      userRatingsMap.set(r.user.id, r.rating);
+    }
+  });
+
+  const reviewCardsData = reviewData.comments
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    )
+    .map((r) => ({
+      id: String(r.id),
+      username: r.user.name,
+      date: new Date(r.createdAt).toLocaleDateString("fr-FR"),
+      rating: userRatingsMap.get(r.user.id), // ⭐ Note actuelle de l’auteur
+      title: r.title ?? undefined,
+      comment: r.comment ?? undefined,
+    }));
+  console.log("reviewCardsData : ", reviewCardsData);
 
   const allReviews: Review[] = [
     ...(reviewData.rating
@@ -84,23 +110,10 @@ const ReviewSection = () => {
           </div>
         </div>
 
-        <div className="mt-12">
-          {reviewData.comments.map((comment) => (
-            <div key={comment.id} className="border-b pb-4 mb-4">
-              <p className="font-semibold">{comment.user.name}</p>
-              {comment.title && (
-                <h4 className="font-bold text-lg">{comment.title}</h4>
-              )}
-              {comment.comment && (
-                <p className="text-gray-700">{comment.comment}</p>
-              )}
-              <p className="text-sm text-gray-400">
-                {new Date(comment.createdAt).toLocaleDateString()}
-              </p>
-            </div>
-          ))}
-        </div>
+        {/* List of reviews */}
+        <ReviewList reviews={reviewCardsData} perPage={2} />
       </div>
+
       {/* Modal */}
       <ReviewModal
         isOpen={isModalOpen}
