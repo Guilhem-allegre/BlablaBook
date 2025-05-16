@@ -7,7 +7,7 @@ const PresentationPage = () => {
 
   return (
     <>
-      <section className="py-12 font-body px-4 sm:px-6 lg:px-8">
+      <section className="py-6 font-body px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-title font-extrabold text-gray-900 mb-4 dark:text-placeholder">
             Bienvenue sur BlaBlaBook
@@ -24,7 +24,7 @@ const PresentationPage = () => {
         <div className="mt-8 flex justify-center gap-4 dark:text-placeholder">
           <Link
             to="/library"
-            className="rounded px-6 py-4 bg-gray-800 font-semibold text-lg text-white text-center shadow-sm transition-all duration-300 hover:bg-gray-600 hover:shadow-gray-400 cursor-pointer dark:bg-gray-600 dark:hover:bg-gray-400"
+            className="rounded px-6 py-4 bg-gray-800 font-semibold text-lg text-white text-center shadow-sm transition-all duration-300 hover:bg-gray-600 hover:shadow-gray-400 cursor-pointer dark:bg-yellow-700 dark:hover:bg-yellow-500 dark:hover:shadow-yellow-400"
             aria-label="Explorer la bibliothèque"
           >
             Explorer la bibliothèque
