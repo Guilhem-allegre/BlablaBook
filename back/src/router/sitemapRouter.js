@@ -7,7 +7,7 @@ export const router = Router();
 // generate sitemap.xml
 router.get('/sitemap.xml', async (req, res, next) => {
  
-  const hostname = process.env.SITE_URL;
+  const hostname = process.env.BASE_URL;
   const sitemap = await generateSitemap(hostname);
   
   res.header('Content-Type', 'application/xml');
@@ -21,7 +21,7 @@ router.get('/sitemap.xml', async (req, res, next) => {
 
 
 router.get('/robots.txt', (req, res) => {
-  const hostname = process.env.SITE_URL;
+  const hostname = process.env.BASE_URL;
   
   // Contenu simple du robots.txt avec référence au sitemap
   const robotsTxt = `User-agent: *
