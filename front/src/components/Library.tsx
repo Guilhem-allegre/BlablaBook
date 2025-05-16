@@ -32,14 +32,10 @@ const Library = () => {
 
   return (
     <>
-      <Seo
-        title="Bibliothèque"
-        description="Tous nos livres"
-        url={`${baseUrl}/library`}
-      />
+      <Seo title="Bibliothèque" description="Tous nos livres" url={`${baseUrl}/library`} />
       <section className="content ml-[5vw] mr-[5vw] bg-body pb-20 md:pb-8">
         <h2 className="text-3xl mt-8 mb-4 font-bold font-title">Tous Nos Livres</h2>
-        <div className="book-list grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5 ">
+        <div className="book-list grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-2 ml:grid-cols-3 xl:grid-cols-5 ">
           {/* loop on books */}
           {books.map((book) => (
             <Link to={`/books/${book.id}`} key={book.id} className="block" data-aos="flip-right">
