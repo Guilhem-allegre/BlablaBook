@@ -565,3 +565,140 @@
  *           type: string
  *           example: Livre ajouté à la liste des livres à lire
  */
+
+// Review
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     Review:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 123
+ *         title:
+ *           type: string
+ *           example: Une lecture passionnante
+ *         comment:
+ *           type: string
+ *           example: J'ai adoré ce livre, surtout la fin qui m'a surpris !
+ *         rating:
+ *           type: integer
+ *           example: 5
+ *         user_id:
+ *           type: integer
+ *           example: 42
+ *         book_id:
+ *           type: integer
+ *           example: 1
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ */
+
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     ReviewResponse:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *           example: Avis ou note ajoutée avec succès
+ *         review:
+ *           type: object
+ *           properties:
+ *             updatedRating:
+ *               $ref: '#/components/schemas/Review'
+ *             newComments:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Review'
+ */
+
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     ReviewUser:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 42
+ *         name:
+ *           type: string
+ *           example: Alice Dupont
+ */
+
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     BookRating:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 1
+ *         rating:
+ *           type: integer
+ *           example: 4
+ *         user:
+ *           $ref: '#/components/schemas/ReviewUser'
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ */
+
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     BookComment:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 15
+ *         title:
+ *           type: string
+ *           example: Excellent mais trop court
+ *         comment:
+ *           type: string
+ *           example: Très bon livre mais j'aurais aimé une suite
+ *         user:
+ *           $ref: '#/components/schemas/ReviewUser'
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ */
+
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     BookReviewsResponse:
+ *       type: object
+ *       properties:
+ *         book_id:
+ *           type: integer
+ *           example: 1
+ *         rating:
+ *           $ref: '#/components/schemas/BookRating'
+ *         comments:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/BookComment'
+ */
