@@ -17,11 +17,12 @@
 
 .dark {
   --color-body: #252d49;
-  --color-sidebar: #2E3440;
-  --color-header: #1C1C26;
+  --color-sidebar: #2e3440;
+  --color-header: #1c1c26;
   --color-placeholder: #faf4e8;
 }
 
+/* put every toast under the header */
 .iziToast-wrapper.iziToast-wrapper-topRight {
   top: 60px !important;
   right: 15px !important;
