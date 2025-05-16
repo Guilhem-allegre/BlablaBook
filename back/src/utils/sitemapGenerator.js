@@ -36,7 +36,7 @@ async function generateSitemap(hostname) {
     priority: 0.9
   }));
 
-  // get all the urls
+  // get all the urls in an array
   const urls = [...staticUrls, ...booksUrls, ...categoriesUrls];
 
   // create stream for sitemap
