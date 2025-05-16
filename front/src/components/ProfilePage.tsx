@@ -1,22 +1,26 @@
 import { useEffect, useState } from "react";
 import { getOneUser } from "../api/apiUser";
-import type { IUser } from "../@types/index.d.ts";
+import { IUser } from "../@types";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../utils/store/useAuthStore";
+<<<<<<< HEAD
+=======
+import UserBookGrid from "../components/UserBookGrid";
+import Seo from "./Seo.tsx";
+
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
+>>>>>>> dev
 
 const ProfilePage = () => {
   const [localUser, setLocalUser] = useState<IUser | null>(null);
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState<string | null>(null); // Error message if any
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const { user } = useAuthStore();
 
   useEffect(() => {
-    // Fetch user data when the component mounts
-
     async function fetchUser() {
       if (!user?.id) {
-        // If user is not logged in
         setError("Utilisateur non connecté");
         setLoading(false);
         return;
@@ -24,10 +28,6 @@ const ProfilePage = () => {
 
       try {
         const userData = await getOneUser();
-        if (!userData) {
-          setError("Impossible de charger le profil.");
-          return;
-        }
         setLocalUser(userData);
       } catch (err) {
         setError("Impossible de charger le profil.");
@@ -39,12 +39,12 @@ const ProfilePage = () => {
     fetchUser();
   }, []);
 
-  // Conditional rendering based on loading or error state
   if (loading) return <p className="text-center">Chargement de votre profil...</p>;
   if (error) return <p className="text-center text-red-500">{error}</p>;
   if (!localUser) return null;
 
   return (
+<<<<<<< HEAD
     <div className="pt-8 content ml-[5vw] mr-[5vw] pb-10 md:pb-8">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-4xl font-bold font-title">{user?.name}</h1>
@@ -127,6 +127,35 @@ const ProfilePage = () => {
         </div>
       </section>
     </div>
+=======
+    <>
+      <Seo title="Profil" description="Votre profil" url={`${baseUrl}/profile`} />
+      <div className="pt-8 content ml-[5vw] mr-[5vw] pb-10 md:pb-8">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-4xl font-bold font-title">{user?.name}</h1>
+          <Link
+            to={`/user/settings`}
+            className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-600 dark:bg-gray-600 dark:hover:bg-gray-400"
+            aria-label="Modifier le profil"
+          >
+            Modifier le profil
+          </Link>
+        </div>
+
+        <UserBookGrid
+          title={`Mes livres lus : ${localUser.books_already_read.length}`}
+          books={localUser.books_already_read.slice(0, 5)}
+          linkTo="/books/read"
+        />
+
+        <UserBookGrid
+          title={`Mes livres à lire : ${localUser.books_wish_read.length}`}
+          books={localUser.books_wish_read.slice(0, 5)}
+          linkTo="/books/to-read"
+        />
+      </div>
+    </>
+>>>>>>> dev
   );
 };
 
