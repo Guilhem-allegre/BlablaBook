@@ -1,4 +1,3 @@
-// components/UserBookGrid.tsx
 import { Link } from "react-router-dom";
 import { IBooks } from "../@types";
 
