@@ -1,25 +1,58 @@
+import { useState } from "react";
 import ReactDOM from "react-dom";
+import { postReview } from "../../api/apiReview";
+import { NewReviewPayload } from "../../@types/review";
 
 interface IReviewModalProps {
   isOpen: boolean;
   onClose: () => void;
+  bookId: number;
+  onReviewAdded: () => void; // Pour recharger les avis
 }
 
 /**
  * ReviewModal component that displays a modal for submitting a new review.
- *
- * @param {Object} param - Component props.
- * @param {boolean} param.isOpen - Whether the modal is open.
- * @param {Function} param.onClose - Function to call when closing the modal.
- * @returns {JSX.Element|null} - The rendered modal component or null if not open.
  */
-const ReviewModal = ({ isOpen, onClose }: IReviewModalProps) => {
+const ReviewModal = ({ isOpen, onClose, bookId, onReviewAdded }: IReviewModalProps) => {
+  const [title, setTitle] = useState("");
+  const [comment, setComment] = useState("");
+  const [rating, setRating] = useState<number | null>(null);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    try {
+      const token = localStorage.getItem("token"); // ou autre selon ton auth
+      if (!token) throw new Error("Utilisateur non authentifié");
+
+      const payload: NewReviewPayload = {
+        title: title || undefined,
+        comment: comment || undefined,
+        rating: rating ?? undefined,
+      };
+
+      await postReview(bookId, payload, token);
+      onClose(); // ferme la modale
+      onReviewAdded(); // recharge les données
+      setTitle("");
+      setComment("");
+      setRating(null);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   if (!isOpen) return null;
 
   return ReactDOM.createPortal(
     <div className="fixed font-body inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="bg-body rounded-lg p-6 w-full max-w-xl relative shadow-lg">
-        {/* Close button */}
+      <div className="bg-white rounded-lg p-6 w-full max-w-xl relative shadow-lg">
         <button
           className="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-xl"
           onClick={onClose}
@@ -27,29 +60,45 @@ const ReviewModal = ({ isOpen, onClose }: IReviewModalProps) => {
           &times;
         </button>
 
-        {/* Form content */}
-        <h2 className="text-2xl font-title font-bold mb-4 text-black">
-          Laissez votre avis
-        </h2>
-        <form className="flex flex-col gap-4">
-          {/* Placeholder for stars (not working yet) */}
-          <div className="text-gray-500">★ ★ ★ ★ ★</div>
+        <h2 className="text-2xl font-bold mb-4 text-black">Laissez votre avis</h2>
+
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          {/* Rating selector simplifié */}
+          <div className="flex gap-1">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <button
+                type="button"
+                key={star}
+                className={`text-2xl ${rating && rating >= star ? "text-yellow-400" : "text-gray-300"}`}
+                onClick={() => setRating(star)}
+              >
+                ★
+              </button>
+            ))}
+          </div>
 
           <input
             type="text"
             placeholder="Titre"
-            className="px-4 py-2 border border-gray-300 rounded-lg text-lg"
+            className="px-4 py-2 border rounded-lg"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
           <textarea
             placeholder="Votre commentaire..."
-            className="px-4 py-2 border border-gray-300 rounded-lg text-lg h-32"
-          ></textarea>
+            className="px-4 py-2 border rounded-lg h-32"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          />
+
+          {error && <p className="text-red-500 text-sm">{error}</p>}
 
           <button
             type="submit"
-            className="rounded px-6 py-4 bg-gray-800 font-semibold text-lg text-white text-center shadow-sm transition-all duration-300 hover:bg-gray-600 hover:shadow-gray-400 cursor-pointer"
+            disabled={loading}
+            className="rounded px-6 py-3 bg-gray-800 text-white font-semibold hover:bg-gray-600"
           >
-            Postez votre avis
+            {loading ? "Envoi en cours..." : "Postez votre avis"}
           </button>
         </form>
       </div>

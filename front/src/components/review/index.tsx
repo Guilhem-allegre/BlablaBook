@@ -5,6 +5,7 @@ import { ReviewApiResponse } from "../../@types/review";
 import { useParams } from "react-router-dom";
 import { getReviewsByBook } from "../../api/apiReview";
 import ReviewModal from "./ReviewModal";
+import OpenModal from "./OpenModal";
 
 /**
  * ReviewS component that displays ratings, reviews, and review actions.
@@ -18,18 +19,18 @@ const Review = () => {
   const { bookId } = useParams();
   const numericBookId = Number(bookId);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getReviewsByBook(numericBookId);
-        setReviewData(data);
-      } catch (err) {
-        console.error("Erreur API:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchData = async () => {
+    try {
+      const data = await getReviewsByBook(numericBookId);
+      setReviewData(data);
+    } catch (err) {
+      console.error("Erreur API:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, [bookId]);
 
@@ -61,7 +62,7 @@ const Review = () => {
           </div>
 
           <div className="flex items-center justify-center">
-            {/* Formulaire plus tard */}
+            <OpenModal onWriteClick={() => setIsModalOpen(true)} />
           </div>
         </div>
 
@@ -83,7 +84,12 @@ const Review = () => {
         </div>
       </div>
       {/* Modal */}
-      <ReviewModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <ReviewModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        bookId={numericBookId}
+        onReviewAdded={fetchData}
+      />
     </section>
   );
 };

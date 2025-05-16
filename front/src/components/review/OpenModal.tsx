@@ -9,7 +9,7 @@ interface IReviewAddProps {
  * @param {Function} param.onWriteClick - Callback function when the write review button is clicked.
  * @returns {JSX.Element} - The rendered review actions component.
  */
-const ReviewAdd = ({ onWriteClick }: IReviewAddProps) => {
+const OpenModal = ({ onWriteClick }: IReviewAddProps) => {
 
   return (
     <div className="flex flex-col sm:flex-row gap-4 justify-center sm:justify-end w-full">
@@ -23,4 +23,4 @@ const ReviewAdd = ({ onWriteClick }: IReviewAddProps) => {
   );
 };
 
-export default ReviewAdd;
+export default OpenModal;

@@ -26,3 +26,9 @@ export interface ReviewApiResponse {
   } | null;
   comments: Review[];
 }
+
+export interface NewReviewPayload {
+  rating?: number;
+  title?: string;
+  comment?: string;
+}
