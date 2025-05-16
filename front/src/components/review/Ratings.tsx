@@ -14,7 +14,7 @@ const ratings = [
  *
  * @returns {JSX.Element} - The rendered rating distribution component.
  */
-const RatingDistribution = () => {
+const Ratings = () => {
   return (
     <div className="flex flex-col gap-4">
       {ratings.map((rating) => (
@@ -29,4 +29,4 @@ const RatingDistribution = () => {
   );
 };
 
-export default RatingDistribution;
+export default Ratings;
