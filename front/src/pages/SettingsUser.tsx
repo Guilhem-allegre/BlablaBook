@@ -172,7 +172,7 @@ const SettingsUser = () => {
         <div className="px-4 sm:px-10 pt-5 font-title">
           {/* back button */}
           <Link to="/profile">
-            <button className="text-blue-900 hover:underline dark:text-yellow-500">← Retour</button>
+            <button className="text-blue-900 hover:underline dark:text-yellow-500" aria-label="retour">← Retour</button>
           </Link>
         </div>
         <div className="flex flex-col w-full  items-center font-title">
