@@ -29,7 +29,12 @@
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.15.1",
     "sequelize": "^6.37.7",
+<<<<<<< HEAD
     "sitemap": "^8.0.0"
+=======
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+>>>>>>> dev
   },
   "devDependencies": {
     "@babel/core": "^7.27.1",
