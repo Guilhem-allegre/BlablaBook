@@ -1,23 +1,24 @@
 import RatingBar from './RatingBar';
+import { Review } from "../../@types/review";
+import { calculateRatingDistribution } from "../../utils/reviews";
 
-// Example of static data for now
-const ratings = [
-  { stars: 5, percentage: 30, count: 30 },
-  { stars: 4, percentage: 40, count: 40 },
-  { stars: 3, percentage: 20, count: 20 },
-  { stars: 2, percentage: 16, count: 16 },
-  { stars: 1, percentage: 8, count: 8 },
-];
+interface RatingsProps {
+  reviews: Review[];
+}
 
 /**
  * RatingDistribution component that displays a distribution of ratings.
  *
+ * @param {Object} props - Component props.
+ * @param {Review[]} props.reviews - Array of reviews to compute distribution from.
  * @returns {JSX.Element} - The rendered rating distribution component.
  */
-const Ratings = () => {
+const Ratings = ({ reviews }: RatingsProps) => {
+  const distribution = calculateRatingDistribution(reviews);
+
   return (
     <div className="flex flex-col gap-4">
-      {ratings.map((rating) => (
+      {distribution.map((rating) => (
         <RatingBar
           key={rating.stars}
           stars={rating.stars}
