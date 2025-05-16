@@ -23,7 +23,7 @@ const UserBookGrid = ({ title, books, linkTo }: UserBookGridProps) => {
       )}
 
       {books.length === 0 ? (
-        <p className="text-lg font-bnpm run dody">Aucun livre trouvé.</p>
+        <p className="text-lg font-body">Aucun livre trouvé.</p>
       ) : (
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
           {books.map((book) => (
