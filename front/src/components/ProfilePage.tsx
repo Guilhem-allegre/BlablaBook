@@ -42,7 +42,7 @@ const ProfilePage = () => {
 
   return (
     <>
-       <Seo title="Profil" description="Votre profil" url={`${baseUrl}/profile`} />
+      <Seo title="Profil" description="Votre profil" url={`${baseUrl}/profile`} />
       <div className="pt-8 content ml-[5vw] mr-[5vw] pb-10 md:pb-8">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-4xl font-bold font-title">{user?.name}</h1>
