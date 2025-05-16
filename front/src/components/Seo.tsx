@@ -4,13 +4,13 @@ import { Helmet } from "react-helmet";
 type SeoProps = {
   title: string;
   description: string;
-  image: string;
+  image?: string;
   url: string;
-  siteName: string;
 };
 
-const Seo = ({ title, description, image, url, siteName}: SeoProps) => {
+const Seo = ({ title, description, image, url}: SeoProps) => {
   const defaultImage = "/public/img/logo/blablabook-social.jpg";
+  const siteName = "BlablaBook";
 
   
   return(
