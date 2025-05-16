@@ -7,6 +7,9 @@ import { useErrorHandler } from "../utils/useErrorHandler";
 import { toastSuccess, toastInfo, toastWarning } from "../utils/toast/toastSuccess";
 import { useAuthStore } from "../utils/store/useAuthStore";
 import BookGrid from "../components/BookGrid";
+import Seo from "../components/Seo";
+
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 /**
  * @component BookDetail
@@ -159,6 +162,11 @@ const DetailsBookPage = () => {
 
   return (
     <>
+      <Seo
+        title="Détail d'un livre"
+        description="Apprenez en davantage sur un livre"
+        url={`${baseUrl}/books/${bookId}`}
+      />
       <div className="bg-body flex flex-col p-4 items-center sm:flex-col ml:flex-row lg:ml-0 xl:ml-64 md:p-8 md:gap-8 mt-5 font-body tracking-wider [word-spacing:2px]">
         <img
           src={`https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/${book.cover_url}.jpg`}
