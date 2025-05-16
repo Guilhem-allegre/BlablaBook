@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 import { useErrorHandler } from "../utils/useErrorHandler";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Seo from "./Seo";
+
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const Library = () => {
   const [books, setBooks] = useState<IBooks>([]);
@@ -29,8 +32,11 @@ const Library = () => {
 
   return (
     <>
-      {/* Ajoute une marge à gauche sur les écrans md et plus grands */}
-      {/* Contenu principal avec marge à gauche */} {/* Ajoute une marge à gauche sur les écrans md et plus grands */}
+      <Seo
+        title="Bibliothèque"
+        description="Tous nos livres"
+        url={`${baseUrl}/library`}
+      />
       <section className="content ml-[5vw] mr-[5vw] bg-body pb-20 md:pb-8">
         <h2 className="text-3xl mt-8 mb-4 font-bold font-title">Tous Nos Livres</h2>
         <div className="book-list grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5 ">
