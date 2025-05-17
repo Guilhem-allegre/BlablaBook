@@ -29,6 +29,8 @@ Disallow: /auth/
 Disallow: /user/settings/
 Disallow: /logout/
 Disallow: /profile/
+Disallow: /books/read/
+Disallow: /books/to-read/
 Sitemap: ${hostname}/sitemap.xml
 `;
   
