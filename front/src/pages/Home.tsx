@@ -8,7 +8,7 @@ const baseUrl = import.meta.env.VITE_API_BASE_URL;
 const HomePage = () => (
   <>
     <Seo
-        title="BlablaBook - Accueil"
+        title="Accueil"
         description="Bienvenue sur BlablaBook, votre bibliothèque sociale."
         url={`${baseUrl}`}
       />

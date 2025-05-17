@@ -25,7 +25,7 @@ export default function MobileCategoryPage() {
   return (
     <>
       <Seo
-        title="BlablaBook - Catégories"
+        title="Catégories"
         description="Choisissez la catégorie que vous souhaitez"
         url={`${baseUrl}/categories`}
       />

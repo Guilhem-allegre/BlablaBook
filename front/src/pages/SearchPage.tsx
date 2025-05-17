@@ -30,7 +30,7 @@ const SearchPage = () => {
   return (
     <>
        <Seo
-        title="BlablaBook - Recherche"
+        title="Recherche"
         description="Résultat de votre recherche"
         url={`${baseUrl}/search`}
       />

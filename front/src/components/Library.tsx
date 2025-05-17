@@ -33,7 +33,7 @@ const Library = () => {
   return (
     <>
       <Seo
-        title="BlablaBook - Bibliothèque"
+        title="Bibliothèque"
         description="Tous nos livres"
         url={`${baseUrl}/library`}
       />

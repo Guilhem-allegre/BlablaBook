@@ -15,7 +15,7 @@ const Seo = ({ title, description, image, url}: SeoProps) => {
   
   return(
     <Helmet>
-      <title>{title}</title>
+      <title>{`${siteName} - ${title}`}</title>
       <meta name="description" content={description}/>
 
       {/* Open Graph / Facebook */}
