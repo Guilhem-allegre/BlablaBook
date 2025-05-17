@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import AverageRating from "./AverageRating";
 import Ratings from "./Ratings";
-import { Review, ReviewApiResponse } from "../../@types/review";
+import { ReviewApiResponse } from "../../@types/review";
 import { useParams } from "react-router-dom";
 import { getReviewsByBook } from "../../api/apiReview";
 import ReviewModal from "./ReviewModal";
 import OpenModal from "./OpenModal";
 import ReviewList from "./ReviewList";
+import { calculateAverageRating } from "../../utils/reviews";
 
 /**
  * ReviewS component that displays ratings, reviews, and review actions.
@@ -14,17 +15,24 @@ import ReviewList from "./ReviewList";
  * @returns {JSX.Element} - The rendered review.
  */
 const ReviewSection = () => {
+  // Etat de la modal. true = ouverte, false = fermé
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // Stock la réponse API
   const [reviewData, setReviewData] = useState<ReviewApiResponse | null>(null);
+  // Loading
   const [loading, setLoading] = useState(true);
+  // Récupére l'id du bouquin depuis l'url et le transforme en number
   const { bookId } = useParams();
   const numericBookId = Number(bookId);
 
+  /**
+   *
+   */
   const fetchData = async () => {
     setLoading(true);
     try {
       const data = await getReviewsByBook(numericBookId);
-      console.log("Nouvelles données reçues :", data);
+      //console.log("Nouvelles données reçues :", data);
       setReviewData(data);
     } catch (err) {
       console.error("Erreur API:", err);
@@ -33,6 +41,9 @@ const ReviewSection = () => {
     }
   };
 
+  /**
+   *
+   */
   useEffect(() => {
     fetchData();
   }, [bookId]);
@@ -45,44 +56,39 @@ const ReviewSection = () => {
     return <p className="text-center">Aucun avis pour ce livre.</p>;
   }
 
+  // Créer une instance de Map, permet de stocker des paires de clé-valeur. (userId (de type number): rating (de type number))
   const userRatingsMap = new Map<number, number>();
-  if (reviewData.rating) {
-    userRatingsMap.set(reviewData.rating.user.id, reviewData.rating.rating);
-  }
-  reviewData.comments.forEach((r) => {
+  // Vérifie si la note existe, si oui -> créer l'entré userId: rating
+  reviewData.reviews.forEach((r) => {
     if (r.rating !== null) {
       userRatingsMap.set(r.user.id, r.rating);
     }
   });
 
-  const reviewCardsData = reviewData.comments
-    .sort(
-      (a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    )
-    .map((r) => ({
+  // Tri les commentaires par date de création
+  //console.log("Données initiales :", reviewData.comments);
+  const reviewCardsData = reviewData.reviews.sort((a, b) => {
+    const dateA = new Date(a.createdAt).getTime();
+    const dateB = new Date(b.createdAt).getTime();
+    //console.log(`Comparaison : ${dateA} - ${dateB}`);
+    return dateB - dateA;
+  });
+  //console.log("Données triées :", reviewCardsData);
+  const transformedData = reviewCardsData.map((r) => {
+    const transformedItem = {
       id: String(r.id),
       username: r.user.name,
       date: new Date(r.createdAt).toLocaleDateString("fr-FR"),
-      rating: userRatingsMap.get(r.user.id), // ⭐ Note actuelle de l’auteur
+      rating: userRatingsMap.get(r.user.id),
       title: r.title ?? undefined,
       comment: r.comment ?? undefined,
-    }));
-  console.log("reviewCardsData : ", reviewCardsData);
+    };
+    // console.log("Élément transformé :", transformedItem);
+    return transformedItem;
+  });
+  //console.log("Données finales :", transformedData);
 
-  const allReviews: Review[] = [
-    ...(reviewData.rating
-      ? [
-          {
-            ...reviewData.rating,
-            title: null,
-            comment: null,
-            book_id: reviewData.book_id,
-          } as Review,
-        ]
-      : []),
-    ...reviewData.comments,
-  ];
+  const allReviews = reviewData.reviews;
 
   return (
     <section className="py-24 relative font-body">
@@ -98,10 +104,8 @@ const ReviewSection = () => {
 
           <div className="flex items-center justify-center">
             <AverageRating
-              value={reviewData.rating?.rating ?? 0}
-              subtitle={`${
-                reviewData.comments.length + (reviewData.rating ? 1 : 0)
-              } avis`}
+              value={calculateAverageRating(allReviews)}
+              subtitle={`${allReviews.length} avis`}
             />
           </div>
 
@@ -111,7 +115,7 @@ const ReviewSection = () => {
         </div>
 
         {/* List of reviews */}
-        <ReviewList reviews={reviewCardsData} perPage={2} />
+        <ReviewList reviews={transformedData} perPage={2} />
       </div>
 
       {/* Modal */}

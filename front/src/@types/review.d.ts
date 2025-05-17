@@ -1,30 +1,30 @@
+export interface UserPreview {
+  id: number;
+  name: string;
+}
+
 export interface Review {
   id: number;
   rating: number | null;
   title: string | null;
   comment: string | null;
-  user: {
-    id: number;
-    name: string;
-  };
+  user: UserPreview;
   book_id: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Rating {
+  id: number;
+  rating: number;
+  user: UserPreview;
   createdAt: string;
   updatedAt: string;
 }
 
 export interface ReviewApiResponse {
   book_id: number;
-  rating: {
-    id: number;
-    rating: number;
-    user: {
-      id: number;
-      name: string;
-    };
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  comments: Review[];
+  reviews: Review[];
 }
 
 export interface NewReviewPayload {

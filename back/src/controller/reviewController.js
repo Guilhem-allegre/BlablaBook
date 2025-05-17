@@ -110,27 +110,17 @@ const reviewController = {
       return next(new ApiError("Aucun avis trouvés pour ce livre", 404));
     }
 
-    const rating = reviews.find((review) => review.rating !== null);
-    const comments = reviews.filter((review) => review.comment || review.title);
-
     res.status(200).json({
       book_id: bookId,
-      rating: rating
-        ? {
-            id: rating.id,
-            rating: rating.rating,
-            user: rating.users,
-            createdAt: rating.createdAt,
-            updatedAt: rating.updatedAt,
-          }
-        : null,
-      comments: comments.map((comment) => ({
-        id: comment.id,
-        title: comment.title,
-        comment: comment.comment,
-        user: comment.users,
-        createdAt: comment.createdAt,
-        updatedAt: comment.updatedAt,
+      reviews: reviews.map((review) => ({
+        id: review.id,
+        rating: review.rating,
+        title: review.title,
+        comment: review.comment,
+        book_id: review.book_id,
+        createdAt: review.createdAt,
+        updatedAt: review.updatedAt,
+        user: review.users,
       })),
     });
   },

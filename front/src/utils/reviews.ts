@@ -27,3 +27,20 @@ export const calculateRatingDistribution = (reviews: Review[]) => {
     }))
     .reverse();
 };
+
+/**
+ * Compute the average rating from a list of reviews.
+ *
+ * @param reviews - Array of reviews
+ * @returns Average rating as a number (0-5)
+ */
+export const calculateAverageRating = (reviews: Review[]): number => {
+  const ratings = reviews
+    .filter((r) => r.rating !== null)
+    .map((r) => r.rating!) // Non-null assertion
+
+  if (ratings.length === 0) return 0;
+
+  const total = ratings.reduce((sum, current) => sum + current, 0);
+  return total / ratings.length;
+};

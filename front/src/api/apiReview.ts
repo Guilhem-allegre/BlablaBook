@@ -1,5 +1,6 @@
 import { ReviewApiResponse,NewReviewPayload } from "../@types/review";
 import { authFetch } from "../utils/authFetch";
+import { IError } from "../@types/auth";
 const API_URL = import.meta.env.VITE_API_BASE_URL;
 
 /**
@@ -26,13 +27,13 @@ export const postReview = async (
   bookId: number,
   payload: NewReviewPayload
 ): Promise<void> => {
-  const res = await authFetch(`http://localhost:3000/user/books/${bookId}/review`, {
+  const res = await authFetch(`${API_URL}/user/books/${bookId}/review`, {
     method: "POST",
     body: JSON.stringify(payload),
   });
 
   if (!res.ok) {
-    const error = await res.json();
+    const error: IError = await res.json();
     throw new Error(error.message || "Erreur lors de l'envoi de l'avis");
   }
 };
