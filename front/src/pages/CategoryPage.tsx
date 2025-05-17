@@ -28,7 +28,7 @@ export default function CategoryPage() {
   return (
     <>
        <Seo
-        title="Catégories"
+        title="BlablaBook - Catégories"
         description="Découvrez nos livres par catégories"
         url={`${baseUrl}/categories/${categoryId}`}
       />

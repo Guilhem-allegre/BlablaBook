@@ -6,7 +6,7 @@ const Mentions = () => {
   return (
     <>
       <Seo
-        title="Mentions légales"
+        title="BlablaBook - Mentions légales"
         description="Les mentions légales du site"
         url={`${baseUrl}/about`}
       />

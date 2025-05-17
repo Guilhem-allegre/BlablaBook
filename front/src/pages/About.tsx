@@ -48,7 +48,7 @@ export default function About() {
   return (
     <>
       <Seo
-        title="A propos"
+        title="BlablaBook - A propos"
         description="Apprenez en davantage sur les créateurs du site"
         url={`${baseUrl}/about`}
       />

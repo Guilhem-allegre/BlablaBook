@@ -163,7 +163,7 @@ const DetailsBookPage = () => {
   return (
     <>
       <Seo
-        title="Détail d'un livre"
+        title="BlablaBook - Détail d'un livre"
         description="Apprenez en davantage sur un livre"
         url={`${baseUrl}/books/${bookId}`}
       />
