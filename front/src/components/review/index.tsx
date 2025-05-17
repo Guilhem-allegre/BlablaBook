@@ -15,19 +15,16 @@ import { calculateAverageRating } from "../../utils/reviews";
  * @returns {JSX.Element} - The rendered review.
  */
 const ReviewSection = () => {
-  // Etat de la modal. true = ouverte, false = fermé
+  // Modal state. true = open, false = closed
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // Stock la réponse API
+  // Stock the API response
   const [reviewData, setReviewData] = useState<ReviewApiResponse | null>(null);
   // Loading
   const [loading, setLoading] = useState(true);
-  // Récupére l'id du bouquin depuis l'url et le transforme en number
+  // Get the book id from the url and turn it into a number
   const { bookId } = useParams();
   const numericBookId = Number(bookId);
 
-  /**
-   *
-   */
   const fetchData = async () => {
     setLoading(true);
     try {
@@ -41,9 +38,6 @@ const ReviewSection = () => {
     }
   };
 
-  /**
-   *
-   */
   useEffect(() => {
     fetchData();
   }, [bookId]);
@@ -56,16 +50,16 @@ const ReviewSection = () => {
     return <p className="text-center">Aucun avis pour ce livre.</p>;
   }
 
-  // Créer une instance de Map, permet de stocker des paires de clé-valeur. (userId (de type number): rating (de type number))
+  // Create a Map instance, allows you to store key-value pairs. (userId (of type number): rating (of type number))
   const userRatingsMap = new Map<number, number>();
-  // Vérifie si la note existe, si oui -> créer l'entré userId: rating
+  // Check if the rating exists, if yes -> create the entry userId:rating
   reviewData.reviews.forEach((r) => {
     if (r.rating !== null) {
       userRatingsMap.set(r.user.id, r.rating);
     }
   });
 
-  // Tri les commentaires par date de création
+  // Sort comments by creation date
   //console.log("Données initiales :", reviewData.comments);
   const reviewCardsData = reviewData.reviews.sort((a, b) => {
     const dateA = new Date(a.createdAt).getTime();

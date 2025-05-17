@@ -61,7 +61,7 @@ const ReviewModal = ({ isOpen, onClose, bookId, onReviewAdded }: IReviewModalPro
         <h2 className="text-2xl font-bold mb-4 text-black">Laissez votre avis</h2>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          {/* Rating selector simplifié */}
+          {/* Simplified rating selector */}
           <div className="flex gap-1">
             {[1, 2, 3, 4, 5].map((star) => (
               <button

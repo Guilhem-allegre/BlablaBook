@@ -44,7 +44,7 @@ const ReviewCard = ({
         </div>
       </div>
 
-      {/* Avis affiché dynamiquement selon contenu */}
+      {/* Notice displayed dynamically according to content */}
       {title && (
         <h4 className="text-lg font-semibold text-black mb-2">{title}</h4>
       )}

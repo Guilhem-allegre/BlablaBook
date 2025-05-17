@@ -14,14 +14,6 @@ export interface Review {
   updatedAt: string;
 }
 
-export interface Rating {
-  id: number;
-  rating: number;
-  user: UserPreview;
-  createdAt: string;
-  updatedAt: string;
-}
-
 export interface ReviewApiResponse {
   book_id: number;
   reviews: Review[];
