@@ -19,7 +19,7 @@ const Seo = ({ title, description, image, url}: SeoProps) => {
       <meta name="description" content={description}/>
 
       {/* Open Graph / Facebook */}
-      <meta property="og:title" content={title} />
+      <meta property="og:title" content={`${siteName} - ${title}`} />
       {description && <meta property="og:description" content={description} />}
       <meta property="og:image" content={image || defaultImage} />
       <meta property="og:type" content="website" />
@@ -28,7 +28,7 @@ const Seo = ({ title, description, image, url}: SeoProps) => {
 
        {/* Twitter Card */}
        <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={title} />
+      <meta name="twitter:title" content={`${siteName} - ${title}`} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image || defaultImage} />
     </Helmet>
