@@ -1,4 +1,4 @@
-import { ReviewApiResponse, NewReviewPayload, Review } from "../@types/review";
+import { IReviewApiResponse, INewReviewPayload, IReview } from "../@types/review";
 import { authFetch } from "../utils/authFetch";
 import { IError } from "../@types/auth";
 const API_URL = import.meta.env.VITE_API_BASE_URL;
@@ -7,13 +7,13 @@ const API_URL = import.meta.env.VITE_API_BASE_URL;
  * Post a new review or rating for a book.
  *
  * @param {number} bookId - The ID of the book to review.
- * @param {NewReviewPayload} payload - The review content.
+ * @param {INewReviewPayload} payload - The review content.
  * @returns {Promise<void>} - Resolves if the request is successful.
  */
 export const createReview = async (
   bookId: number,
-  payload: NewReviewPayload
-): Promise<Review> => {
+  payload: INewReviewPayload
+): Promise<IReview> => {
   const res = await authFetch(`${API_URL}/user/books/${bookId}/review`, {
     method: "POST",
     body: JSON.stringify(payload),
@@ -36,8 +36,8 @@ export const createReview = async (
  */
 export const updateReview = async (
   bookId: number,
-  payload: NewReviewPayload
-): Promise<Review> => {
+  payload: INewReviewPayload
+): Promise<IReview> => {
   const res = await authFetch(`${API_URL}/user/books/${bookId}/review`, {
     method: "PATCH",
     body: JSON.stringify(payload),
@@ -78,7 +78,7 @@ export const deleteReview = async (bookId: number): Promise<string> => {
  */
 export const getReviewsByBook = async (
   bookId: number
-): Promise<ReviewApiResponse> => {
+): Promise<IReviewApiResponse> => {
   const res = await authFetch(`${API_URL}/books/${bookId}/reviews`);
   if (!res.ok) {
     throw new Error("Erreur lors du chargement des avis");

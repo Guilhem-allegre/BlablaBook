@@ -4,6 +4,9 @@ interface IReviewCardProps {
   rating?: number;
   title?: string;
   comment?: string;
+  isOwner?: boolean; // new attribute to know if it is the author
+  onEdit?: () => void;
+  onDelete?: () => void;
 }
 
 const ReviewCard = ({
@@ -12,6 +15,9 @@ const ReviewCard = ({
   rating,
   title,
   comment,
+  isOwner,
+  onEdit,
+  onDelete,
 }: IReviewCardProps) => {
   const fullStars = rating !== undefined ? Math.round(rating) : 0;
 
@@ -20,7 +26,10 @@ const ReviewCard = ({
       {/* Stars + user */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-4">
         {rating !== undefined && rating > 0 ? (
-          <div className="flex items-center gap-2" aria-label={`Note de ${rating} sur 5 étoiles`}>
+          <div
+            className="flex items-center gap-2"
+            aria-label={`Note de ${rating} sur 5 étoiles`}
+          >
             {Array.from({ length: 5 }).map((_, i) => (
               <svg
                 key={i}
@@ -48,8 +57,23 @@ const ReviewCard = ({
       {title && (
         <h4 className="text-lg font-semibold text-black mb-2">{title}</h4>
       )}
-      {comment && (
-        <p className="text-lg text-gray-600 leading-8">{comment}</p>
+      {comment && <p className="text-lg text-gray-600 leading-8">{comment}</p>}
+
+      {isOwner && (
+        <div className="flex gap-4 mt-4">
+          <button
+            onClick={onEdit}
+            className="px-4 py-2 rounded bg-blue-300 font-medium hover:bg-blue-200 transition"
+          >
+            <i className="fa-solid fa-pencil"></i> Modifier
+          </button>
+          <button
+            onClick={onDelete}
+            className="px-4 py-2 rounded bg-red-300 font-medium hover:bg-red-200 transition"
+          >
+            <i className="fa-solid fa-trash"></i> Supprimer
+          </button>
+        </div>
       )}
     </div>
   );

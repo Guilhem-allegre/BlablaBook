@@ -1,9 +1,11 @@
 import { useState } from "react";
 import ReviewCard from "./ReviewCard";
+import { useAuthStore } from "../../utils/store/useAuthStore";
 
 interface IReview {
   id: string;
   username: string;
+  userId: number;
   date: string;
   rating?: number;
   title?: string;
@@ -14,6 +16,8 @@ interface IReviewListProps {
   reviews: IReview[];
   perPage?: number;
   showAll?: boolean;
+  onEdit?: (review: IReview) => void;
+  onDelete?: (review: IReview) => void;
 }
 
 /**
@@ -24,7 +28,9 @@ interface IReviewListProps {
  * @param {number} [param.perPage=2] - Number of reviews to show per page (defaults to 2).
  * @returns {JSX.Element} - The rendered review list component.
  */
-const ReviewList = ({ reviews, perPage = 2 }: IReviewListProps) => {
+const ReviewList = ({ reviews, perPage = 2, onEdit, onDelete }: IReviewListProps) => {
+  const { user } = useAuthStore();
+  const userId = user?.id;
   const [visibleCount, setVisibleCount] = useState(perPage);
   const visibleReviews = reviews.slice(0, visibleCount);
   const hasMore = visibleCount < reviews.length;
@@ -43,6 +49,9 @@ const ReviewList = ({ reviews, perPage = 2 }: IReviewListProps) => {
           rating={review.rating}
           title={review.title}
           comment={review.comment}
+          isOwner={review.userId === userId}
+          onEdit={() => onEdit?.(review)}
+          onDelete={() => onDelete?.(review)}
         />
       ))}
 
@@ -50,7 +59,8 @@ const ReviewList = ({ reviews, perPage = 2 }: IReviewListProps) => {
         <div className="flex justify-center pt-4">
           <button
             onClick={() => setVisibleCount((v) => v + perPage)}
-            className="rounded px-6 py-4 bg-white font-semibold text-lg text-gray-700 text-center shadow-sm transition-all duration-300 hover:bg-gray-300 hover:shadow-gray-400 cursor-pointer" aria-label="Afficher plus d'avis"
+            className="rounded px-6 py-4 bg-white font-semibold text-lg text-gray-700 text-center shadow-sm transition-all duration-300 hover:bg-gray-300 hover:shadow-gray-400 cursor-pointer"
+            aria-label="Afficher plus d'avis"
           >
             Voir tout les avis
           </button>

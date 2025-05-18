@@ -1,15 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { createReview } from "../../api/apiReview";
-import { NewReviewPayload } from "../../@types/review";
-import { toastWarning } from "../../utils/toast/toastSuccess";
+import { createReview, updateReview } from "../../api/apiReview";
+import { INewReviewPayload } from "../../@types/review";
+import { toastSuccess, toastWarning } from "../../utils/toast/toaster";
 import { useAuthStore } from "../../utils/store/useAuthStore";
 
 interface IReviewModalProps {
   isOpen: boolean;
   onClose: () => void;
   bookId: number;
-  onReviewAdded: () => void; // Pour recharger les avis
+  onReviewAdded: () => void; // To reload reviews
+  reviewToEdit?: {
+    title?: string;
+    comment?: string;
+    rating?: number;
+  } | null;
 }
 
 /**
@@ -20,6 +25,7 @@ const ReviewModal = ({
   onClose,
   bookId,
   onReviewAdded,
+  reviewToEdit,
 }: IReviewModalProps) => {
   const [title, setTitle] = useState("");
   const [error, setError] = useState("");
@@ -36,14 +42,20 @@ const ReviewModal = ({
     setLoading(true);
 
     try {
-      const payload: NewReviewPayload = {
+      const payload: INewReviewPayload = {
         title: title || undefined,
         comment: comment || undefined,
         rating: rating ?? undefined,
       };
 
-      await createReview(bookId, payload);
-      console.log("Avis ajouté !");
+      if (!reviewToEdit) {
+        await createReview(bookId, payload);
+        toastSuccess("Votre avis a bien été ajouté !");
+      } else {
+        await updateReview(bookId, payload);
+        toastSuccess("Votre avis a bien été modifié !");
+      }
+
       onClose();
       onReviewAdded();
       setTitle("");
@@ -69,6 +81,18 @@ const ReviewModal = ({
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (reviewToEdit) {
+      setTitle(reviewToEdit.title || "");
+      setComment(reviewToEdit.comment || "");
+      setRating(reviewToEdit.rating ?? null);
+    } else {
+      setTitle("");
+      setComment("");
+      setRating(null);
+    }
+  }, [reviewToEdit, isOpen]);
 
   if (!isOpen) return null;
 

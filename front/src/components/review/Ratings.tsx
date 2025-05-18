@@ -1,9 +1,9 @@
 import RatingBar from './RatingBar';
-import { Review } from "../../@types/review";
+import { IReview } from "../../@types/review";
 import { calculateRatingDistribution } from "../../utils/reviews";
 
 interface RatingsProps {
-  reviews: Review[];
+  reviews: IReview[];
 }
 
 /**

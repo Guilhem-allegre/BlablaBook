@@ -7,15 +7,22 @@ import OpenModal from "./OpenModal";
 import ReviewList from "./ReviewList";
 import { getReviewsByBook } from "../../api/apiReview";
 import { calculateAverageRating } from "../../utils/reviews";
-import { ReviewApiResponse } from "../../@types/review";
+import { IReviewApiResponse } from "../../@types/review";
+import { deleteReview } from "../../api/apiReview";
+import { toastConfirm, toastSuccess, toastWarning } from "../../utils/toast/toaster";
 
 /**
  * ReviewSection component that displays ratings, reviews, and review actions.
  */
 const ReviewSection = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [reviewData, setReviewData] = useState<ReviewApiResponse | null>(null);
+  const [reviewData, setReviewData] = useState<IReviewApiResponse | null>(null);
   const [loading, setLoading] = useState(true);
+  const [reviewToEdit, setReviewToEdit] = useState<{
+    title?: string;
+    comment?: string;
+    rating?: number;
+  } | null>(null);
 
   const { bookId } = useParams();
   const numericBookId = Number(bookId);
@@ -37,6 +44,24 @@ const ReviewSection = () => {
   useEffect(() => {
     fetchData();
   }, [bookId]);
+
+  const handleDeleteReview = () => {
+    toastConfirm("Voulez-vous vraiment supprimer votre avis ?", async () => {
+      try {
+        await deleteReview(numericBookId);
+        toastSuccess("Votre avis a bien été supprimé.");
+        fetchData();
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          toastWarning(
+            err.message || "Une erreur est survenue lors de la suppression."
+          );
+        } else {
+          toastWarning("Impossible de supprimer l'avis.");
+        }
+      }
+    });
+  };
 
   return (
     <section className="py-24 relative font-body">
@@ -80,12 +105,22 @@ const ReviewSection = () => {
               reviews={reviewData.reviews.map((r) => ({
                 id: String(r.id),
                 username: r.user.name,
+                userId: r.user.id,
                 date: new Date(r.createdAt).toLocaleDateString("fr-FR"),
                 rating: r.rating ?? undefined,
                 title: r.title ?? undefined,
                 comment: r.comment ?? undefined,
               }))}
               perPage={2}
+              onDelete={handleDeleteReview}
+              onEdit={(review) => {
+                setReviewToEdit({
+                  title: review.title,
+                  comment: review.comment,
+                  rating: review.rating,
+                });
+                setIsModalOpen(true);
+              }}
             />
           ) : (
             <p className="text-center text-gray-500 mt-10" aria-live="polite">
@@ -98,9 +133,13 @@ const ReviewSection = () => {
 
       <ReviewModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => {
+          setIsModalOpen(false);
+          setReviewToEdit(null); // ✅ réinitialise le mode
+        }}
         bookId={numericBookId}
         onReviewAdded={fetchData}
+        reviewToEdit={reviewToEdit}
       />
     </section>
   );

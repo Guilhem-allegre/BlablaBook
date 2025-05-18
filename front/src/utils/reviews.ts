@@ -1,4 +1,4 @@
-import { Review } from "../@types/review";
+import { IReview } from "../@types/review";
 
 /**
  * Compute rating distribution (1 to 5 stars) from a list of reviews.
@@ -6,10 +6,10 @@ import { Review } from "../@types/review";
  * @param reviews - Array of reviews
  * @returns Array with star count, percentage, and total count per rating
  */
-export const calculateRatingDistribution = (reviews: Review[]) => {
+export const calculateRatingDistribution = (reviews: IReview[]) => {
   const ratingCounts = [0, 0, 0, 0, 0];
   const ratingsOnly = reviews.filter(
-    (r): r is Review & { rating: number } => r.rating !== null
+    (r): r is IReview & { rating: number } => r.rating !== null
   );
 
   for (const review of ratingsOnly) {
@@ -36,7 +36,7 @@ export const calculateRatingDistribution = (reviews: Review[]) => {
  * @param reviews - Array of reviews
  * @returns Average rating as a number (0-5)
  */
-export const calculateAverageRating = (reviews: Review[]): number => {
+export const calculateAverageRating = (reviews: IReview[]): number => {
   const ratings = reviews
     .filter((r) => r.rating !== null)
     .map((r) => r.rating!); // Non-null assertion

@@ -1,9 +1,9 @@
-export interface UserPreview {
+export interface IUserPreview {
   id: number;
   name: string;
 }
 
-export interface Review {
+export interface IReview {
   id: number;
   rating: number | null;
   title: string | null;
@@ -14,12 +14,12 @@ export interface Review {
   updatedAt: string;
 }
 
-export interface ReviewApiResponse {
+export interface IReviewApiResponse {
   book_id: number;
   reviews: Review[];
 }
 
-export interface NewReviewPayload {
+export interface INewReviewPayload {
   rating?: number;
   title?: string;
   comment?: string;
