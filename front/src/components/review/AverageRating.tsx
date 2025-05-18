@@ -16,7 +16,7 @@ const AverageRating = ({ value, subtitle }: IAverageRatingProps) => {
   return (
     <div className="flex flex-col items-center justify-center text-center px-4">
       {/* Average rating */}
-      <h2 className="text-5xl text-black mb-4">{value.toFixed(1)}</h2>
+      <h2 className="text-5xl text-black mb-4 dark:text-blue-100">{value.toFixed(1)}</h2>
 
       {/* Stars */}
       <div
@@ -55,7 +55,7 @@ const AverageRating = ({ value, subtitle }: IAverageRatingProps) => {
       </div>
 
       {/* Subtitle */}
-      <p className="text-lg text-gray-500">{subtitle}</p>
+      <p className="text-lg text-gray-500 dark:text-placeholder">{subtitle}</p>
     </div>
   );
 };

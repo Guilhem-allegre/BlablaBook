@@ -103,9 +103,9 @@ const ReviewModal = ({
       aria-modal="true"
       aria-labelledby="review-modal-title"
     >
-      <div className="bg-white rounded-lg p-6 w-full max-w-xl relative shadow-lg">
+      <div className="bg-white rounded-lg p-6 w-full max-w-xl relative shadow-lg dark:bg-body">
         <button
-          className="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-xl"
+          className="absolute cursor-pointer top-3 right-3 text-gray-500 hover:text-gray-800 text-xl dark:hover:text-gray-200"
           aria-label="Fermer la fenêtre"
           onClick={onClose}
         >
@@ -114,19 +114,19 @@ const ReviewModal = ({
 
         <h2
           id="review-modal-title"
-          className="text-2xl font-bold mb-4 text-black"
+          className="text-2xl font-bold mb-4 text-black dark:text-placeholder"
         >
           Laissez votre avis
         </h2>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 dark:text-placeholder">
           {/* Simplified rating selector */}
-          <div className="flex gap-1" aria-label="Choisissez une note">
+          <div className="flex gap-1 dark:text-placeholder" aria-label="Choisissez une note">
             {[1, 2, 3, 4, 5].map((star) => (
               <button
                 type="button"
                 key={star}
-                className={`text-2xl ${
+                className={`text-2xl cursor-pointer ${
                   rating && rating >= star ? "text-yellow-400" : "text-gray-300"
                 }`}
                 onClick={() => setRating(star)}
@@ -156,7 +156,7 @@ const ReviewModal = ({
           <button
             type="submit"
             disabled={loading}
-            className="rounded px-6 py-3 bg-gray-800 text-white font-semibold hover:bg-gray-600"
+            className="rounded cursor-pointer px-6 py-3 bg-gray-800 text-white font-semibold hover:bg-gray-600 dark:bg-yellow-700 dark:hover:bg-yellow-500 dark:hover:shadow-yellow-400"
           >
             {loading ? "Envoi en cours..." : "Postez votre avis"}
           </button>

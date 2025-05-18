@@ -66,7 +66,7 @@ const ReviewSection = () => {
   return (
     <section className="py-24 relative font-body">
       <div className="max-w-7xl mx-auto px-4">
-        <h2 className="font-title text-4xl text-center mb-12 text-black">
+        <h2 className="font-title text-4xl text-center mb-12 text-black dark:text-blue-100">
           Les notes et avis
         </h2>
 
@@ -123,7 +123,7 @@ const ReviewSection = () => {
               }}
             />
           ) : (
-            <p className="text-center text-gray-500 mt-10" aria-live="polite">
+            <p className="text-center text-gray-500 mt-10 dark:text-placeholder" aria-live="polite">
               Aucun avis n’a encore été posté pour ce livre. Soyez le premier à
               laisser le vôtre !
             </p>

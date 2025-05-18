@@ -48,16 +48,16 @@ const ReviewCard = ({
         )}
 
         <div className="flex items-center gap-2">
-          <p className="font-semibold text-lg text-black">@{username}</p>
-          <p className="text-gray-400 text-base">{date}</p>
+          <p className="font-semibold text-lg text-black dark:text-yellow-500">@{username}</p>
+          <p className="text-gray-400 text-base dark:text-placeholder">{date}</p>
         </div>
       </div>
 
       {/* Notice displayed dynamically according to content */}
       {title && (
-        <h4 className="text-lg font-semibold text-black mb-2">{title}</h4>
+        <h4 className="text-lg font-semibold text-black mb-2 dark:text-yellow-500">{title}</h4>
       )}
-      {comment && <p className="text-lg text-gray-600 leading-8">{comment}</p>}
+      {comment && <p className="text-lg text-gray-600 leading-8 dark:text-placeholder">{comment}</p>}
 
       {isOwner && (
         <div className="flex gap-4 mt-4">

@@ -17,7 +17,7 @@ const RatingBar = ({ stars, percentage, count }: IRatingBarProps) => {
   return (
     <div className="flex items-center w-full" aria-label={`${stars} étoiles : ${count} avis, ${percentage}%`}>
       {/* Number of stars */}
-      <p className="font-medium text-lg py-[1px] text-black mr-[2px]">{stars}</p>
+      <p className="font-medium text-lg py-[1px] text-black mr-[2px] dark:text-placeholder">{stars}</p>
 
       {/* Star icon (we put one for the example) */}
       <svg className="mx-1" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -30,13 +30,13 @@ const RatingBar = ({ stars, percentage, count }: IRatingBarProps) => {
       {/* Progress bar */}
       <div className="h-2 w-full min-w-[150px] rounded-full bg-gray-200 mx-4">
         <div
-          className="h-full bg-placeholder rounded-full"
+          className="h-full bg-placeholder rounded-full dark:bg-yellow-700"
           style={{ width: `${percentage}%` }}
         />
       </div>
 
       {/* Number of reviews */}
-      <p className="font-medium text-lg py-[1px] text-black">{count}</p>
+      <p className="font-medium text-lg py-[1px] text-black dark:text-placeholder">{count}</p>
     </div>
   );
 };

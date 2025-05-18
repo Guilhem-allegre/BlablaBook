@@ -38,7 +38,7 @@ const ReviewList = ({ reviews, perPage = 2, onEdit, onDelete }: IReviewListProps
   return (
     <div className="mt-10 space-y-10">
       {/* Title */}
-      <h4 className="font-title text-3xl text-black mb-6">
+      <h4 className="font-title text-3xl text-black mb-6 dark:text-blue-100">
         Les derniers avis postés
       </h4>
       {visibleReviews.map((review) => (
