@@ -1,7 +1,9 @@
 import { useState } from "react";
 import ReactDOM from "react-dom";
-import { postReview } from "../../api/apiReview";
+import { createReview } from "../../api/apiReview";
 import { NewReviewPayload } from "../../@types/review";
+import { toastWarning } from "../../utils/toast/toastSuccess";
+import { useAuthStore } from "../../utils/store/useAuthStore";
 
 interface IReviewModalProps {
   isOpen: boolean;
@@ -13,12 +15,20 @@ interface IReviewModalProps {
 /**
  * ReviewModal component that displays a modal for submitting a new review.
  */
-const ReviewModal = ({ isOpen, onClose, bookId, onReviewAdded }: IReviewModalProps) => {
+const ReviewModal = ({
+  isOpen,
+  onClose,
+  bookId,
+  onReviewAdded,
+}: IReviewModalProps) => {
   const [title, setTitle] = useState("");
+  const [error, setError] = useState("");
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState<number | null>(null);
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const { user } = useAuthStore();
+  const userId = user?.id;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,15 +42,29 @@ const ReviewModal = ({ isOpen, onClose, bookId, onReviewAdded }: IReviewModalPro
         rating: rating ?? undefined,
       };
 
-      await postReview(bookId, payload);
-      console.log("Avis ajouté !")
+      await createReview(bookId, payload);
+      console.log("Avis ajouté !");
       onClose();
       onReviewAdded();
       setTitle("");
       setComment("");
       setRating(null);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      if (!userId) {
+        toastWarning(`Vous devez être connecté pour pouvoir laisser un avis.
+      <div class="mt-4 text-center">
+        <a href="/auth" class="text-blue-600 underline font-semibold hover:text-blue-800 transition">
+          Se connecter
+        </a>
+      </div>`);
+        onClose();
+        return;
+      }
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Une erreur inconnue est survenue.");
+      }
     } finally {
       setLoading(false);
     }
@@ -49,26 +73,40 @@ const ReviewModal = ({ isOpen, onClose, bookId, onReviewAdded }: IReviewModalPro
   if (!isOpen) return null;
 
   return ReactDOM.createPortal(
-    <div className="fixed font-body inset-0 z-50 flex items-center justify-center bg-black/50">
+    <div
+      className="fixed font-body inset-0 z-50 flex items-center justify-center bg-black/50"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="review-modal-title"
+    >
       <div className="bg-white rounded-lg p-6 w-full max-w-xl relative shadow-lg">
         <button
           className="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-xl"
+          aria-label="Fermer la fenêtre"
           onClick={onClose}
         >
-          &times;
+          <i className="fa-solid fa-circle-xmark"></i>
         </button>
 
-        <h2 className="text-2xl font-bold mb-4 text-black">Laissez votre avis</h2>
+        <h2
+          id="review-modal-title"
+          className="text-2xl font-bold mb-4 text-black"
+        >
+          Laissez votre avis
+        </h2>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {/* Simplified rating selector */}
-          <div className="flex gap-1">
+          <div className="flex gap-1" aria-label="Choisissez une note">
             {[1, 2, 3, 4, 5].map((star) => (
               <button
                 type="button"
                 key={star}
-                className={`text-2xl ${rating && rating >= star ? "text-yellow-400" : "text-gray-300"}`}
+                className={`text-2xl ${
+                  rating && rating >= star ? "text-yellow-400" : "text-gray-300"
+                }`}
                 onClick={() => setRating(star)}
+                aria-label={`Donner ${star} étoile${star > 1 ? "s" : ""}`}
               >
                 ★
               </button>

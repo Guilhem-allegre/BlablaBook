@@ -50,7 +50,7 @@ const ReviewList = ({ reviews, perPage = 2 }: IReviewListProps) => {
         <div className="flex justify-center pt-4">
           <button
             onClick={() => setVisibleCount((v) => v + perPage)}
-            className="rounded px-6 py-4 bg-white font-semibold text-lg text-gray-700 text-center shadow-sm transition-all duration-300 hover:bg-gray-300 hover:shadow-gray-400 cursor-pointer"
+            className="rounded px-6 py-4 bg-white font-semibold text-lg text-gray-700 text-center shadow-sm transition-all duration-300 hover:bg-gray-300 hover:shadow-gray-400 cursor-pointer" aria-label="Afficher plus d'avis"
           >
             Voir tout les avis
           </button>

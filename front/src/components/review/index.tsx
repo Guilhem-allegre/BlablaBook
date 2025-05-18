@@ -1,35 +1,30 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import AverageRating from "./AverageRating";
 import Ratings from "./Ratings";
-import { ReviewApiResponse } from "../../@types/review";
-import { useParams } from "react-router-dom";
-import { getReviewsByBook } from "../../api/apiReview";
 import ReviewModal from "./ReviewModal";
 import OpenModal from "./OpenModal";
 import ReviewList from "./ReviewList";
+import { getReviewsByBook } from "../../api/apiReview";
 import { calculateAverageRating } from "../../utils/reviews";
+import { ReviewApiResponse } from "../../@types/review";
 
 /**
- * ReviewS component that displays ratings, reviews, and review actions.
- *
- * @returns {JSX.Element} - The rendered review.
+ * ReviewSection component that displays ratings, reviews, and review actions.
  */
 const ReviewSection = () => {
-  // Modal state. true = open, false = closed
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // Stock the API response
   const [reviewData, setReviewData] = useState<ReviewApiResponse | null>(null);
-  // Loading
   const [loading, setLoading] = useState(true);
-  // Get the book id from the url and turn it into a number
+
   const { bookId } = useParams();
   const numericBookId = Number(bookId);
 
+  // Fetch review data from API
   const fetchData = async () => {
     setLoading(true);
     try {
       const data = await getReviewsByBook(numericBookId);
-      //console.log("Nouvelles données reçues :", data);
       setReviewData(data);
     } catch (err) {
       console.error("Erreur API:", err);
@@ -38,51 +33,10 @@ const ReviewSection = () => {
     }
   };
 
+  // Trigger fetch on mount and when book changes
   useEffect(() => {
     fetchData();
   }, [bookId]);
-
-  if (loading) {
-    return <p className="text-center">Chargement des avis...</p>;
-  }
-
-  if (!reviewData) {
-    return <p className="text-center">Aucun avis pour ce livre.</p>;
-  }
-
-  // Create a Map instance, allows you to store key-value pairs. (userId (of type number): rating (of type number))
-  const userRatingsMap = new Map<number, number>();
-  // Check if the rating exists, if yes -> create the entry userId:rating
-  reviewData.reviews.forEach((r) => {
-    if (r.rating !== null) {
-      userRatingsMap.set(r.user.id, r.rating);
-    }
-  });
-
-  // Sort comments by creation date
-  //console.log("Données initiales :", reviewData.comments);
-  const reviewCardsData = reviewData.reviews.sort((a, b) => {
-    const dateA = new Date(a.createdAt).getTime();
-    const dateB = new Date(b.createdAt).getTime();
-    //console.log(`Comparaison : ${dateA} - ${dateB}`);
-    return dateB - dateA;
-  });
-  //console.log("Données triées :", reviewCardsData);
-  const transformedData = reviewCardsData.map((r) => {
-    const transformedItem = {
-      id: String(r.id),
-      username: r.user.name,
-      date: new Date(r.createdAt).toLocaleDateString("fr-FR"),
-      rating: userRatingsMap.get(r.user.id),
-      title: r.title ?? undefined,
-      comment: r.comment ?? undefined,
-    };
-    // console.log("Élément transformé :", transformedItem);
-    return transformedItem;
-  });
-  //console.log("Données finales :", transformedData);
-
-  const allReviews = reviewData.reviews;
 
   return (
     <section className="py-24 relative font-body">
@@ -93,14 +47,22 @@ const ReviewSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <Ratings reviews={allReviews} />
+            {loading && !reviewData ? (
+              <p className="text-gray-400">Chargement de la répartition...</p>
+            ) : (
+              <Ratings reviews={reviewData?.reviews ?? []} />
+            )}
           </div>
 
           <div className="flex items-center justify-center">
-            <AverageRating
-              value={calculateAverageRating(allReviews)}
-              subtitle={`${allReviews.length} avis`}
-            />
+            {loading && !reviewData ? (
+              <p className="text-gray-400">Chargement de la moyenne...</p>
+            ) : (
+              <AverageRating
+                value={calculateAverageRating(reviewData?.reviews ?? [])}
+                subtitle={`${reviewData?.reviews.length ?? 0} avis`}
+              />
+            )}
           </div>
 
           <div className="flex items-center justify-center">
@@ -108,11 +70,32 @@ const ReviewSection = () => {
           </div>
         </div>
 
-        {/* List of reviews */}
-        <ReviewList reviews={transformedData} perPage={2} />
+        <div className="mt-12">
+          {loading && !reviewData ? (
+            <p className="text-center text-gray-600" aria-live="polite">
+              Chargement des avis...
+            </p>
+          ) : reviewData?.reviews.length ? (
+            <ReviewList
+              reviews={reviewData.reviews.map((r) => ({
+                id: String(r.id),
+                username: r.user.name,
+                date: new Date(r.createdAt).toLocaleDateString("fr-FR"),
+                rating: r.rating ?? undefined,
+                title: r.title ?? undefined,
+                comment: r.comment ?? undefined,
+              }))}
+              perPage={2}
+            />
+          ) : (
+            <p className="text-center text-gray-500 mt-10" aria-live="polite">
+              Aucun avis n’a encore été posté pour ce livre. Soyez le premier à
+              laisser le vôtre !
+            </p>
+          )}
+        </div>
       </div>
 
-      {/* Modal */}
       <ReviewModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

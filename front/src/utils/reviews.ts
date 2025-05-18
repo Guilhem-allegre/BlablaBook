@@ -8,10 +8,12 @@ import { Review } from "../@types/review";
  */
 export const calculateRatingDistribution = (reviews: Review[]) => {
   const ratingCounts = [0, 0, 0, 0, 0];
-  const ratingsOnly = reviews.filter((r) => r.rating !== null) as Required<Pick<Review, "rating">>[];
+  const ratingsOnly = reviews.filter(
+    (r): r is Review & { rating: number } => r.rating !== null
+  );
 
   for (const review of ratingsOnly) {
-    const rating = review.rating!;
+    const rating = review.rating;
     if (rating >= 1 && rating <= 5) {
       ratingCounts[rating - 1]++;
     }
@@ -37,7 +39,7 @@ export const calculateRatingDistribution = (reviews: Review[]) => {
 export const calculateAverageRating = (reviews: Review[]): number => {
   const ratings = reviews
     .filter((r) => r.rating !== null)
-    .map((r) => r.rating!) // Non-null assertion
+    .map((r) => r.rating!); // Non-null assertion
 
   if (ratings.length === 0) return 0;
 

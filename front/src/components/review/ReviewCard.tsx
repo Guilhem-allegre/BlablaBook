@@ -20,7 +20,7 @@ const ReviewCard = ({
       {/* Stars + user */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-4">
         {rating !== undefined && rating > 0 ? (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2" aria-label={`Note de ${rating} sur 5 étoiles`}>
             {Array.from({ length: 5 }).map((_, i) => (
               <svg
                 key={i}

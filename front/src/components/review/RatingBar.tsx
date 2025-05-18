@@ -15,7 +15,7 @@ interface IRatingBarProps {
  */
 const RatingBar = ({ stars, percentage, count }: IRatingBarProps) => {
   return (
-    <div className="flex items-center w-full">
+    <div className="flex items-center w-full" aria-label={`${stars} étoiles : ${count} avis, ${percentage}%`}>
       {/* Number of stars */}
       <p className="font-medium text-lg py-[1px] text-black mr-[2px]">{stars}</p>
 
