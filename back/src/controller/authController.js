@@ -25,12 +25,7 @@ const authController = {
 
     // 2. Check if the email is a disposable email
     if (isDisposableEmail(email)) {
-      return next(
-        new ApiError(
-          "Les adresses e-mail temporaires ne sont pas acceptées",
-          400
-        )
-      );
+      return next(new ApiError("Les adresses e-mail temporaires ne sont pas acceptées", 400));
     }
 
     // 3. Validate the email domain

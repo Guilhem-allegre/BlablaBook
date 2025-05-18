@@ -160,7 +160,6 @@ router.delete("/user/books/read/:bookId", authMiddleware, userLibraryController.
  *                 - $ref: '#/components/schemas/UserNotFound'
  *                 - $ref: '#/components/schemas/BookNotFound'
  */
-
 router.post("/user/books/to-read/:bookId", authMiddleware, userLibraryController.addToWishRead);
 
 /**
@@ -208,5 +207,4 @@ router.post("/user/books/to-read/:bookId", authMiddleware, userLibraryController
  *                 - $ref: '#/components/schemas/UserNotFound'
  *                 - $ref: '#/components/schemas/BookNotFound'
  */
-
 router.delete("/user/books/to-read/:bookId", authMiddleware, userLibraryController.deleteToWishRead);

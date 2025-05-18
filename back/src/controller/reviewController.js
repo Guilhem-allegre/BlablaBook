@@ -16,18 +16,14 @@ const reviewController = {
     const { rating, title, comment } = req.body;
 
     if (!rating && !title && !comment) {
-      return next(
-        new ApiError("Vous devez au moins noter ou laisser un commentaire", 400)
-      );
+      return next(new ApiError("Vous devez au moins noter ou laisser un commentaire", 400));
     }
 
     const existingReview = await Review.findOne({
       where: { user_id: userId, book_id: bookId },
     });
     if (existingReview) {
-      return next(
-        new ApiError("Vous avez déjà laissé un avis pour ce livre", 400)
-      );
+      return next(new ApiError("Vous avez déjà laissé un avis pour ce livre", 400));
     }
 
     const review = await Review.create({
@@ -42,11 +38,12 @@ const reviewController = {
   },
 
   /**
+   * Controller method to update an existing review.
    *
-   * @param {*} req
-   * @param {*} res
-   * @param {*} next
-   * @returns
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @param {Function} next - The next middleware function.
+   * @returns {Object} - The response object with the updated review data.
    */
   async updateReview(req, res, next) {
     const userId = req.user?.userId;
@@ -58,9 +55,7 @@ const reviewController = {
     });
 
     if (!review) {
-      return next(
-        new ApiError("Aucun avis à mettre à jour pour ce livre", 404)
-      );
+      return next(new ApiError("Aucun avis à mettre à jour pour ce livre", 404));
     }
 
     review.rating = rating ?? review.rating; // Nullish coalescing : Use rating if it is defined (not null and not undefined), otherwise keep the old value.
@@ -72,11 +67,12 @@ const reviewController = {
   },
 
   /**
-   * 
-   * @param {*} req 
-   * @param {*} res 
-   * @param {*} next 
-   * @returns 
+   * Controller method to delete a review.
+   *
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @param {Function} next - The next middleware function.
+   * @returns {Object} - The response object with a success message.
    */
   async deleteReview(req, res, next) {
     const userId = req.user?.userId; // ID de l'utilisateur authentifié
