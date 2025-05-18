@@ -1,5 +1,5 @@
 import { Book, Category } from "../models/associations.js";
-import { Op, where } from "sequelize";
+import { fn, col, Op, where } from "sequelize";
 import Sequelize from "sequelize";
 import { ApiError } from "../middlewares/ApiError.js";
 
@@ -86,10 +86,37 @@ const bookController = {
       includeOptions[0].where.name = { [Op.iLike]: `%${categoryName}%` }; // case insensitive on the category name
     }
 
-    const result = await Book.findAll({
-      where: whereConditions,
-      include: includeOptions,
-    });
+    try {
+      const result = await Book.findAll({
+        where: whereConditions,
+        include: [
+          ...includeOptions,
+          {
+            association: "categories",
+            through: { attributes: [] }, // ⬅️ n'inclut pas les champs du pivot
+          },
+          {
+            association: "authors",
+            through: { attributes: [] },
+          },
+          {
+            association: "reviews",
+            attributes: [],
+          },
+        ],
+        attributes: {
+          include: [[fn("AVG", col("reviews.rating")), "averageRating"]],
+        },
+        group: ["Book.id", "categories.id", "authors.id"],
+      });
+
+      return res.status(200).json(result);
+    } catch (error) {
+      console.error("💥 Erreur dans getAllBooks :", error);
+      return res.status(500).json({ message: "Erreur interne", error });
+    }
+
+    console.log(result.map((b) => b.toJSON()));
 
     if (result.length === 0) {
       return res.status(200).json({
