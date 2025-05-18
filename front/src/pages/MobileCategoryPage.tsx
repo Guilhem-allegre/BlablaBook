@@ -47,6 +47,7 @@ export default function MobileCategoryPage() {
                         <img
                           src={`/img/categories/${categoriesImage[category.id - 1].src}`}
                           alt=""
+                          role="presentation"
                           className="rounded-2xl brightness-50 w-full h-full object-cover absolute inset-0"
                         />
                         <div className="absolute inset-0 flex items-center justify-center">

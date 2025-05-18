@@ -52,7 +52,8 @@ export default function CategoryPage() {
                       <div className="book cursor-pointer hover:shadow-lg hover:rounded-md transition-shadow text-center">
                         <img
                           src={`https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/${book.cover_url}.jpg`}
-                          alt={`${book.title}`}
+                          alt=""
+                          role="presentation"
                           className="h-80 w-100 object-contain mb-2 mx-auto"
                         />
                         <p className="font-body tracking-wider [word-spacing:2px] text-lg">{book.title}</p>

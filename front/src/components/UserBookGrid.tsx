@@ -36,7 +36,8 @@ const UserBookGrid = ({ title, books, linkTo }: UserBookGridProps) => {
               <div className="book cursor-pointer hover:shadow-lg hover:rounded-md hover:transition-shadow">
                 <img
                   src={`https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/${book.cover_url}.jpg`}
-                  alt={book.title}
+                  alt=""
+                  role="presentation"
                   className="h-80 w-full object-contain mb-2 mx-auto"
                 />
                 <p className="text-center text-lg font-body tracking-wider">{book.title}</p>
