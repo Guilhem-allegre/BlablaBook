@@ -1,4 +1,3 @@
-import { Op } from "sequelize";
 import { Review } from "../models/associations.js";
 import { ApiError } from "../middlewares/ApiError.js";
 
@@ -22,71 +21,79 @@ const reviewController = {
       );
     }
 
-    // Object to store the results of the review creation/updating
-    const reviews = {
-      updatedRating: null,
-      newComments: [],
-    };
-
-    // Case where user wants to add or update a rating (with or without review)
-    if (rating !== undefined) {
-      const existingRating = await Review.findOne({
-        where: {
-          book_id: bookId,
-          user_id: userId,
-          rating: { [Op.not]: null },
-        },
-      });
-      if (existingRating) {
-        existingRating.rating = rating;
-        await existingRating.save();
-        // Store the updated rating information
-        reviews.updatedRating = {
-          id: existingRating.id,
-          rating: existingRating.rating,
-          user_id: existingRating.user_id,
-          book_id: existingRating.book_id,
-          createdAt: existingRating.createdAt,
-          updatedAt: existingRating.updatedAt,
-        };
-      } else {
-        const newRating = await Review.create({
-          rating,
-          book_id: bookId,
-          user_id: userId,
-        });
-        reviews.updatedRating = {
-          id: newRating.id,
-          rating: newRating.rating,
-          user_id: newRating.user_id,
-          book_id: newRating.book_id,
-          createdAt: newRating.createdAt,
-          updatedAt: newRating.updatedAt,
-        };
-      }
+    const existingReview = await Review.findOne({
+      where: { user_id: userId, book_id: bookId },
+    });
+    if (existingReview) {
+      return next(
+        new ApiError("Vous avez déjà laissé un avis pour ce livre", 400)
+      );
     }
 
-    if (title || comment) {
-      const newReview = await Review.create({
-        title,
-        comment,
-        book_id: bookId,
+    const review = await Review.create({
+      user_id: userId,
+      book_id: bookId,
+      rating,
+      title,
+      comment,
+    });
+
+    res.status(201).json({ message: "Avis créé avec succès", review });
+  },
+
+  /**
+   *
+   * @param {*} req
+   * @param {*} res
+   * @param {*} next
+   * @returns
+   */
+  async updateReview(req, res, next) {
+    const userId = req.user?.userId;
+    const bookId = parseInt(req.params.bookId);
+    const { rating, title, comment } = req.body;
+
+    const review = await Review.findOne({
+      where: { user_id: userId, book_id: bookId },
+    });
+
+    if (!review) {
+      return next(
+        new ApiError("Aucun avis à mettre à jour pour ce livre", 404)
+      );
+    }
+
+    review.rating = rating ?? review.rating; // Nullish coalescing : Use rating if it is defined (not null and not undefined), otherwise keep the old value.
+    review.title = title ?? review.title;
+    review.comment = comment ?? review.comment;
+    await review.save();
+
+    res.status(200).json({ message: "Avis mis à jour avec succès", review });
+  },
+
+  /**
+   * 
+   * @param {*} req 
+   * @param {*} res 
+   * @param {*} next 
+   * @returns 
+   */
+  async deleteReview(req, res, next) {
+    const userId = req.user?.userId; // ID de l'utilisateur authentifié
+    const bookId = parseInt(req.params.bookId); // ID du livre
+
+    const review = await Review.findOne({
+      where: {
         user_id: userId,
-      });
-      reviews.newComments.push({
-        id: newReview.id,
-        title: newReview.title,
-        comment: newReview.comment,
-        user_id: newReview.user_id,
-        book_id: newReview.book_id,
-        createdAt: newReview.createdAt,
-        updatedAt: newReview.updatedAt,
-      });
+        book_id: bookId,
+      },
+    });
+    if (!review) {
+      return next(new ApiError("Aucun avis trouvé à supprimer", 404));
     }
 
-    res
-      .status(201)
-      .json({ message: "Avis ou note ajoutée avec succès", review: reviews });
+    await review.destroy();
+    res.status(200).json({ message: "Avis supprimé avec succès" });
   },
 
   /**
@@ -102,12 +109,13 @@ const reviewController = {
 
     const reviews = await Review.findAll({
       where: { book_id: bookId },
-      include: { association: "users", attributes: ["id", "name"] },
+      include: [{ association: "users", attributes: ["id", "name"] }],
       order: [["createdAt", "DESC"]],
     });
 
-    if (!reviews) {
-      return next(new ApiError("Aucun avis trouvés pour ce livre", 404));
+    // Sequelize always returns an array, so we check for empty array
+    if (reviews.length === 0) {
+      return next(new ApiError("Aucun avis trouvé pour ce livre", 404));
     }
 
     res.status(200).json({

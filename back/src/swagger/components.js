@@ -577,21 +577,21 @@
  *         id:
  *           type: integer
  *           example: 123
- *         title:
- *           type: string
- *           example: Une lecture passionnante
- *         comment:
- *           type: string
- *           example: J'ai adoré ce livre, surtout la fin qui m'a surpris !
  *         rating:
  *           type: integer
  *           example: 5
+ *         title:
+ *           type: string
+ *           example: Superbe lecture
+ *         comment:
+ *           type: string
+ *           example: Une fin magistrale !
  *         user_id:
  *           type: integer
- *           example: 42
+ *           example: 1
  *         book_id:
  *           type: integer
- *           example: 1
+ *           example: 42
  *         createdAt:
  *           type: string
  *           format: date-time
@@ -609,16 +609,9 @@
  *       properties:
  *         message:
  *           type: string
- *           example: Avis ou note ajoutée avec succès
+ *           example: Avis ajouté ou mis à jour avec succès
  *         review:
- *           type: object
- *           properties:
- *             updatedRating:
- *               $ref: '#/components/schemas/Review'
- *             newComments:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Review'
+ *           $ref: '#/components/schemas/Review'
  */
 
 /**

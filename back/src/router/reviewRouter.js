@@ -71,6 +71,89 @@ router.post("/user/books/:bookId/review", authMiddleware, validate(reviewSchema)
 
 /**
  * @openapi
+ * /user/books/{bookId}/review:
+ *   patch:
+ *     tags:
+ *       - Review
+ *     summary: Modifier un avis existant sur un livre
+ *     description: Permet à un utilisateur connecté de modifier son avis sur un livre.
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: bookId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               rating:
+ *                 type: integer
+ *                 minimum: 1
+ *                 maximum: 5
+ *               title:
+ *                 type: string
+ *               comment:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Avis mis à jour avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ReviewResponse'
+ *       404:
+ *         description: Aucun avis trouvé à mettre à jour
+ *       401:
+ *         description: Non autorisé
+ *       500:
+ *         description: Erreur serveur
+ */
+router.patch("/user/books/:bookId/review", authMiddleware, validate(reviewSchema), reviewController.updateReview);
+
+/**
+ * @openapi
+ * /user/books/{bookId}/review:
+ *   delete:
+ *     tags:
+ *       - Review
+ *     summary: Supprimer son avis sur un livre
+ *     description: Permet à un utilisateur connecté de supprimer son propre avis sur un livre.
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: bookId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Avis supprimé avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Avis supprimé avec succès
+ *       404:
+ *         description: Aucun avis trouvé à supprimer
+ *       401:
+ *         description: Non autorisé
+ *       500:
+ *         description: Erreur serveur
+ */
+router.delete("/user/books/:bookId/review", authMiddleware, reviewController.deleteReview);
+
+/**
+ * @openapi
  * /books/{bookId}/reviews:
  *   get:
  *     tags:

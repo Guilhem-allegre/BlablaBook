@@ -1,7 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "./client-sequelize.js";
 
-export class Review extends Model { }
+export class Review extends Model {}
 
 Review.init(
   {
@@ -25,5 +25,11 @@ Review.init(
   {
     sequelize,
     tableName: "review",
+    indexes: [
+      {
+        unique: true,
+        fields: ["user_id", "book_id"], // Ensure one review per user per book
+      },
+    ],
   }
-)
+);
