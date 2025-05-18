@@ -170,7 +170,8 @@ const DetailsBookPage = () => {
       <div className="bg-body flex flex-col p-4 items-center sm:flex-col ml:flex-row lg:ml-0 xl:ml-64 md:p-8 md:gap-8 mt-5 font-body tracking-wider [word-spacing:2px]">
         <img
           src={`https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/${book.cover_url}.jpg`}
-          alt={`${book.title}`}
+          alt=""
+          role="presentation"
           className="w-60 mr-5 h-auto mb-4 "
         />
 
