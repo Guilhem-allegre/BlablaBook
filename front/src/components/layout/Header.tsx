@@ -45,7 +45,7 @@ const Header = () => {
         </nav>
 
         {/* Categories search */}
-        <Link to="/categories" className="block md:hidden pr-4 ">
+        <Link to="/categories" className="block md:hidden pr-4 " aria-label="Voir les catégories">
           <i className="fa-solid fa-sliders text-2xl text-placeholder"></i>
         </Link>
       </header>
