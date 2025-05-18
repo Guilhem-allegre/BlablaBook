@@ -63,13 +63,13 @@ const ReviewCard = ({
         <div className="flex gap-4 mt-4">
           <button
             onClick={onEdit}
-            className="px-4 py-2 rounded bg-blue-300 font-medium hover:bg-blue-200 transition"
+            className="px-4 py-2 rounded bg-blue-300 font-medium hover:bg-blue-200 transition dark:text-gray-800"
           >
             <i className="fa-solid fa-pencil"></i> Modifier
           </button>
           <button
             onClick={onDelete}
-            className="px-4 py-2 rounded bg-red-300 font-medium hover:bg-red-200 transition"
+            className="px-4 py-2 rounded bg-red-300 font-medium hover:bg-red-200 transition dark:text-gray-800"
           >
             <i className="fa-solid fa-trash"></i> Supprimer
           </button>
