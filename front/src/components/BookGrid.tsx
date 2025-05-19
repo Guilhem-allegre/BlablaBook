@@ -39,19 +39,21 @@ const BookGrid = ({ title, fetchBooks, currentBookId }: BookGridProps) => {
 
       <Swiper
         modules={[Navigation, Pagination, A11y, Autoplay]}
-        spaceBetween={30}
+        spaceBetween={50}
         slidesPerView={5}
-        loop={true}
-        autoplay={{ delay: 1500, disableOnInteraction: false }}
+        autoplay={{ delay: 1700, disableOnInteraction: false }}
         navigation
         pagination={{ clickable: true }}
         breakpoints={{
-          480: { slidesPerView: 2 },
-          768: { slidesPerView: 3 },
-          1024: { slidesPerView: 4 },
-          1280: { slidesPerView: 5 },
+          300: { slidesPerView: 1 },
+          550: { slidesPerView: 2 },
+          768: { slidesPerView: 1 },
+          850: { slidesPerView: 2 },
+          1110: { slidesPerView: 4 },
+          1350: { slidesPerView: 4, spaceBetween: 200 },
+          1550: { slidesPerView: 5 },
         }}
-        className="!pb-10" // Ajoute de l'espace sous le slider pour les flèches/pagination
+        className="!p-10" // Ajoute de l'espace sous le slider pour les flèches/pagination
       >
         {bookList.map((book) => {
           const rating = book.averageRating !== undefined && book.averageRating !== null ? parseFloat(String(book.averageRating)) : null;
