@@ -67,13 +67,13 @@ const ReviewSection = () => {
   };
 
   return (
-    <section className="py-24 relative font-body">
+    <section className="py-12 relative font-body">
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="font-title text-4xl text-center mb-12 text-black dark:text-blue-100">
           Les notes et avis
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-8 px-4 ml:grid-cols-3">
           <div>
             {loading && !reviewData ? (
               <p className="text-gray-400">Chargement de la répartition...</p>
@@ -93,7 +93,7 @@ const ReviewSection = () => {
             )}
           </div>
 
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center h-full">
             <OpenModal onWriteClick={() => setIsModalOpen(true)} />
           </div>
         </div>

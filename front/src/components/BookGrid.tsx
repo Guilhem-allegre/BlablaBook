@@ -58,6 +58,7 @@ const BookGrid = ({ title, fetchBooks, currentBookId }: BookGridProps) => {
         className="!p-10" // Ajoute de l'espace sous le slider pour les flèches/pagination
       >
         {bookList.map((book) => {
+          // Safety check to avoid errors with averageRating
           const rating = book.averageRating !== undefined && book.averageRating !== null ? parseFloat(String(book.averageRating)) : null;
           return (
             <SwiperSlide key={book.id}>
