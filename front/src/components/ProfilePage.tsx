@@ -43,8 +43,8 @@ const ProfilePage = () => {
   return (
     <>
       <Seo title="Profil" description="Votre profil" url={`${baseUrl}/profile`} />
-      <div className="pt-8 content ml-[5vw] mr-[5vw] pb-10 md:pb-8">
-        <div className="flex justify-between items-center mb-6">
+      <div className="pt-8 content px-4 pb-10 md:pb-8">
+        <div className="flex justify-between items-center mb-6 px-4 md:px-10">
           <h1 className="text-4xl font-bold font-title">{user?.name}</h1>
           <Link
             to={`/user/settings`}
@@ -55,17 +55,9 @@ const ProfilePage = () => {
           </Link>
         </div>
 
-        <UserBookGrid
-          title={`Mes livres lus : ${localUser.books_already_read.length}`}
-          books={localUser.books_already_read.slice(0, 5)}
-          linkTo="/books/read"
-        />
+        <UserBookGrid title={`Mes livres lus : ${localUser.books_already_read.length}`} books={localUser.books_already_read.slice(0, 5)} linkTo="/books/read" />
 
-        <UserBookGrid
-          title={`Mes livres à lire : ${localUser.books_wish_read.length}`}
-          books={localUser.books_wish_read.slice(0, 5)}
-          linkTo="/books/to-read"
-        />
+        <UserBookGrid title={`Mes livres à lire : ${localUser.books_wish_read.length}`} books={localUser.books_wish_read.slice(0, 5)} linkTo="/books/to-read" />
       </div>
     </>
   );
