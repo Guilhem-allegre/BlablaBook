@@ -7,9 +7,6 @@ import { useAuthStore } from "../utils/store/useAuthStore";
 import { IError } from "../@types/auth";
 import { toastError } from "../utils/toast/toastError";
 import { toastSuccess } from "../utils/toast/toaster";
-import Seo from "../components/Seo";
-
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const SettingsUser = () => {
   const navigate = useNavigate();
@@ -163,11 +160,6 @@ const SettingsUser = () => {
 
   return (
     <>
-      <Seo
-        title="Mofier votre profil"
-        description="Modification du profil"
-        url={`${baseUrl}//user/settings`}
-      />
       <div className="w-full px-4">
         <div className="px-4 sm:px-10 pt-5 font-title">
           {/* back button */}
