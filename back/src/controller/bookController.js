@@ -69,6 +69,10 @@ const bookController = {
         { title: { [Op.iLike]: `%${search}%` } }, // case insensitive on the book title
         { "$authors.name$": { [Op.iLike]: `%${search}%` } }, // case insensitive on the author name
       ];
+      const year = Number(search);//for the year
+      if (!isNaN(year)) {
+        whereConditions[Op.or].push({ published: year });
+      }
     }
 
     // If param is given, filter by category ID
