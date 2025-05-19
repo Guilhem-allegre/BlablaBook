@@ -28,10 +28,10 @@ const BookGrid = ({ title, fetchBooks, currentBookId }: BookGridProps) => {
   return (
     <section className="content ml-[5vw] mr-[5vw] py-10">
       <h2 className="text-3xl mb-4 font-bold font-title">{title}</h2>
-      <div className="grid grid-cols-1 gap-8 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-2 ml:grid-cols-3 xl:grid-cols-5">
+      <div className="grid grid-cols-1 gap-8 xxs:grid-cols-2 sm:grid-cols-3 md:grid-cols-2 ml:grid-cols-3 xl:grid-cols-5">
         {bookList.map((book) => {
           return (
-            <Link key={book.id} to={`/books/${book.id}`} className="block" aria-label={`Voir les détails du livre ${book.title}`}>
+            <Link key={book.id} to={`/books/${book.id}`} className="block w-60 mx-auto xxs:w-full py-2" aria-label={`Voir les détails du livre ${book.title}`}>
               <div className="book cursor-pointer hover:shadow-lg hover:rounded-md hover:transition-shadow">
                 <img
                   src={`https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/${book.cover_url}.jpg`}
