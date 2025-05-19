@@ -59,11 +59,11 @@ export const toastConfirm = (message: string, onConfirm: () => void) => {
       [
         "<button><strong>Oui</strong></button>",
         (
-          instance,
+          _instance,
           toast,
-          button,
-          event,
-          inputs
+          _button,
+          _event,
+          _inputs
         ) => {
           iziToast.hide({}, toast, "button");
           onConfirm();
@@ -73,11 +73,11 @@ export const toastConfirm = (message: string, onConfirm: () => void) => {
       [
         "<button>Annuler</button>",
         (
-          instance,
+          _instance,
           toast,
-          button,
-          event,
-          inputs
+          _button,
+          _event,
+          _inputs
         ) => {
           iziToast.hide({}, toast, "button");
         },
