@@ -18,7 +18,7 @@ const HomePage = () => (
       <div className="md:hidden p-3">
         <ThemeToggle />
       </div>
-      <div data-aos="zoom-in" data-aos-duration="1000">
+      <div data-aos="zoom-out" data-aos-duration="1000">
         <PresentationPage />
       </div>
       <div data-aos="fade-up" data-aos-duration="1000">
