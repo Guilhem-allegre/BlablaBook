@@ -35,7 +35,6 @@ const BookGrid = ({ title, fetchBooks, currentBookId }: BookGridProps) => {
             book.averageRating !== undefined && book.averageRating !== null
               ? parseFloat(String(book.averageRating))
               : null;
-
           return (
             <Link
               key={book.id}
