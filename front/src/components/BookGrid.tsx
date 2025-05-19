@@ -5,6 +5,8 @@ import { useErrorHandler } from "../utils/useErrorHandler";
 import StarRatingStatic from "./review/StarRating";
 import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import Aos from "aos";
+import "aos/dist/aos.css";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -21,6 +23,7 @@ const BookGrid = ({ title, fetchBooks, currentBookId }: BookGridProps) => {
   const { handleError } = useErrorHandler();
 
   useEffect(() => {
+    Aos.init();
     async function loadBooks() {
       try {
         const allBooks = await fetchBooks();
@@ -36,12 +39,11 @@ const BookGrid = ({ title, fetchBooks, currentBookId }: BookGridProps) => {
   return (
     <section className="content ml-[5vw] mr-[5vw] py-10">
       <h2 className="text-3xl mb-4 font-bold font-title">{title}</h2>
-
       <Swiper
         modules={[Navigation, Pagination, A11y, Autoplay]}
         spaceBetween={50}
         slidesPerView={5}
-        autoplay={{ delay: 1700, disableOnInteraction: false }}
+        autoplay={{ delay: 2000, disableOnInteraction: false }}
         navigation
         pagination={{ clickable: true }}
         breakpoints={{
@@ -57,7 +59,6 @@ const BookGrid = ({ title, fetchBooks, currentBookId }: BookGridProps) => {
       >
         {bookList.map((book) => {
           const rating = book.averageRating !== undefined && book.averageRating !== null ? parseFloat(String(book.averageRating)) : null;
-
           return (
             <SwiperSlide key={book.id}>
               <Link to={`/books/${book.id}`} className="block w-60 mx-auto py-2" aria-label={`Voir les détails du livre ${book.title}`}>

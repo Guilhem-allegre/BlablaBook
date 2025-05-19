@@ -8,7 +8,6 @@ import MobileNav from "./components/layout/MobileNav";
 import BackToTopPage from "./components/BackToTopPage";
 
 import HomePage from "./pages/Home";
-import DetailPage from "./pages/DetailsBookPage";
 import CategoryPage from "./pages/CategoryPage";
 import MobileCategoryPage from "./pages/MobileCategoryPage";
 import Library from "./components/Library";
@@ -25,6 +24,7 @@ import ErrorNotFound from "./pages/ErrorNotFound";
 import ErrorServer from "./pages/ErrorServer";
 
 import { ErrorBoundary } from "react-error-boundary";
+import DetailsBookPage from "./pages/DetailsBookPage";
 
 function App() {
   const location = useLocation();
@@ -45,7 +45,7 @@ function App() {
           <Routes>
             {/* Route definitions */}
             <Route path="/" element={<HomePage />} />
-            <Route path="/books/:bookId" element={<DetailPage />} />
+            <Route path="/books/:bookId" element={<DetailsBookPage />} />
             <Route path="/categories/:categoryId" element={<CategoryPage />} />
             <Route path="/categories" element={<MobileCategoryPage />} />
             <Route path="/library" element={<Library />} />
