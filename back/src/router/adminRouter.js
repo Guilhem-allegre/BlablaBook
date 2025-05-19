@@ -3,10 +3,7 @@ import { adminController } from "../controller/adminController.js";
 import { validate } from "../middlewares/validateWrapper.js";
 import { categorySchema } from "../middlewares/schemaValidate/categoryValidateSchema.js";
 import { authorValidate } from "../middlewares/schemaValidate/authorValidateSchema.js";
-import {
-  createBookSchema,
-  updateBookSchema,
-} from "../middlewares/schemaValidate/bookValidateSchema.js";
+import { createBookSchema, updateBookSchema } from "../middlewares/schemaValidate/bookValidateSchema.js";
 import { isAdminMiddleware } from "../middlewares/isAdminMiddleware.js";
 import { authMiddleware } from "../middlewares/authMiddleware.js";
 
@@ -44,13 +41,7 @@ export const router = Router();
  *               $ref: '#/components/schemas/Error'
  */
 
-router.post(
-  "/admin/add/books",
-  authMiddleware,
-  isAdminMiddleware,
-  validate(createBookSchema),
-  adminController.addNewBook
-);
+router.post("/admin/add/books", authMiddleware, isAdminMiddleware, validate(createBookSchema), adminController.addNewBook);
 
 /**
  * @openapi
@@ -90,13 +81,7 @@ router.post(
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.patch(
-  "/admin/update/books/:bookId",
-  authMiddleware,
-  isAdminMiddleware,
-  validate(updateBookSchema),
-  adminController.updateBook
-);
+router.patch("/admin/update/books/:bookId", authMiddleware, isAdminMiddleware, validate(updateBookSchema), adminController.updateBook);
 
 /**
  * @openapi
@@ -127,12 +112,7 @@ router.patch(
  *               $ref: '#/components/schemas/Error'
  */
 
-router.delete(
-  "/admin/delete/books/:bookId",
-  authMiddleware,
-  isAdminMiddleware,
-  adminController.deleteBook
-);
+router.delete("/admin/delete/books/:bookId", authMiddleware, isAdminMiddleware, adminController.deleteBook);
 
 /**
  * @openapi
@@ -166,13 +146,7 @@ router.delete(
  *               $ref: '#/components/schemas/Error'
  */
 
-router.post(
-  "/admin/add/categories",
-  authMiddleware,
-  isAdminMiddleware,
-  validate(categorySchema),
-  adminController.addCategory
-);
+router.post("/admin/add/categories", authMiddleware, isAdminMiddleware, validate(categorySchema), adminController.addCategory);
 
 /**
  * @openapi
@@ -213,13 +187,7 @@ router.post(
  *               $ref: '#/components/schemas/Error'
  */
 
-router.patch(
-  "/admin/update/categories/:categoryId",
-  authMiddleware,
-  isAdminMiddleware,
-  validate(categorySchema),
-  adminController.updateCategory
-);
+router.patch("/admin/update/categories/:categoryId", authMiddleware, isAdminMiddleware, validate(categorySchema), adminController.updateCategory);
 
 /**
  * @openapi
@@ -250,12 +218,7 @@ router.patch(
  *               $ref: '#/components/schemas/Error'
  */
 
-router.delete(
-  "/admin/delete/categories/:categoryId",
-  authMiddleware,
-  isAdminMiddleware,
-  adminController.deleteCategory
-);
+router.delete("/admin/delete/categories/:categoryId", authMiddleware, isAdminMiddleware, adminController.deleteCategory);
 
 /**
  * @openapi
@@ -288,13 +251,7 @@ router.delete(
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post(
-  "/admin/add/authors",
-  authMiddleware,
-  isAdminMiddleware,
-  validate(authorValidate),
-  adminController.addAuthor
-);
+router.post("/admin/add/authors", authMiddleware, isAdminMiddleware, validate(authorValidate), adminController.addAuthor);
 
 /**
  * @openapi
@@ -334,13 +291,7 @@ router.post(
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.patch(
-  "/admin/update/authors/:authorId",
-  authMiddleware,
-  isAdminMiddleware,
-  validate(authorValidate),
-  adminController.updateAuthor
-);
+router.patch("/admin/update/authors/:authorId", authMiddleware, isAdminMiddleware, validate(authorValidate), adminController.updateAuthor);
 
 /**
  * @openapi
@@ -370,9 +321,4 @@ router.patch(
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.delete(
-  "/admin/delete/authors/:authorId",
-  authMiddleware,
-  isAdminMiddleware,
-  adminController.deleteAuthor
-);
+router.delete("/admin/delete/authors/:authorId", authMiddleware, isAdminMiddleware, adminController.deleteAuthor);

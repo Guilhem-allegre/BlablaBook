@@ -3,10 +3,7 @@ import { getOneUser } from "../api/apiUser";
 import { IUser } from "../@types";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../utils/store/useAuthStore";
-import UserBookGrid from "../components/UserBookGrid";
-import Seo from "./Seo.tsx";
-
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
+import UserBookGrid from "./UserBookGrid";
 
 const ProfilePage = () => {
   const [localUser, setLocalUser] = useState<IUser | null>(null);
@@ -42,7 +39,6 @@ const ProfilePage = () => {
 
   return (
     <>
-      <Seo title="Profil" description="Votre profil" url={`${baseUrl}/profile`} />
       <div className="pt-8 content px-4 pb-10 md:pb-8">
         <div className="flex justify-between items-center mb-6 px-4 md:px-10">
           <h1 className="text-4xl font-bold font-title">{user?.name}</h1>
@@ -54,11 +50,11 @@ const ProfilePage = () => {
             Modifier le profil
           </Link>
         </div>
-
-        <UserBookGrid title={`Mes livres lus : ${localUser.books_already_read.length}`} books={localUser.books_already_read.slice(0, 5)} linkTo="/books/read" />
-
-        <UserBookGrid title={`Mes livres à lire : ${localUser.books_wish_read.length}`} books={localUser.books_wish_read.slice(0, 5)} linkTo="/books/to-read" />
       </div>
+
+      <UserBookGrid title={`Mes livres lus : ${localUser.books_already_read.length}`} books={localUser.books_already_read.slice(0, 5)} linkTo="/books/read" />
+
+      <UserBookGrid title={`Mes livres à lire : ${localUser.books_wish_read.length}`} books={localUser.books_wish_read.slice(0, 5)} linkTo="/books/to-read" />
     </>
   );
 };

@@ -6,6 +6,7 @@ import { useErrorHandler } from "../utils/useErrorHandler";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Seo from "./Seo";
+import StarRatingStatic from "./review/StarRating";
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -42,10 +43,18 @@ const Library = () => {
               <div className="book cursor-pointer hover:shadow-lg hover:rounded-md transition-shadow text-center">
                 <img
                   src={`https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/${book.cover_url}.jpg`}
-                  alt={`Couverture du livre : ${book.title}`}
+                  alt=""
+                  role="presentation"
                   className="h-80 w-100 object-contain mb-2 mx-auto"
                 />
                 <p className="text-center text-lg font-body [word-spacing:2px] tracking-wider">{book.title}</p>
+              </div>
+              <div className="mt-2 min-h-[28px] flex justify-center">
+                {book.averageRating !== null ? (
+                  <StarRatingStatic rating={Number(book.averageRating)} showValue />
+                ) : (
+                  <p className="text-sm text-gray-500 italic">Pas encore noté</p>
+                )}
               </div>
             </Link>
           ))}

@@ -6,10 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../utils/store/useAuthStore";
 import { IError } from "../@types/auth";
 import { toastError } from "../utils/toast/toastError";
-import { toastSuccess } from "../utils/toast/toastSuccess";
-import Seo from "../components/Seo";
-
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
+import { toastSuccess } from "../utils/toast/toaster";
 
 const SettingsUser = () => {
   const navigate = useNavigate();
@@ -107,7 +104,7 @@ const SettingsUser = () => {
       setEditPassword(false);
       setEditEmail(false);
       setConfirmationModal(false);
-      toastSuccess("Profil mis à jour avec succès !")
+      toastSuccess("Profil mis à jour avec succès !");
     } catch (error: unknown) {
       // handle api errors
       const apiError = error as IError;
@@ -163,16 +160,16 @@ const SettingsUser = () => {
 
   return (
     <>
-       <Seo
-        title="Mofier votre profil"
-        description="Modification du profil"
-        url={`${baseUrl}//user/settings`}
-      />
       <div className="w-full px-4">
         <div className="px-4 sm:px-10 pt-5 font-title">
           {/* back button */}
           <Link to="/profile">
-            <button className="text-blue-900 hover:underline dark:text-yellow-500">← Retour</button>
+            <button
+              className="text-blue-900 hover:underline dark:text-yellow-500"
+              aria-label="retour"
+            >
+              ← Retour
+            </button>
           </Link>
         </div>
         <div className="flex flex-col w-full  items-center font-title">
@@ -262,7 +259,7 @@ const SettingsUser = () => {
                   ></i>
                 </button>
               </div>
-          
+
               {/* password field with edit toggle */}
               <div className="flex items-center justify-between border-b border-gray-300 pb-2">
                 <input
