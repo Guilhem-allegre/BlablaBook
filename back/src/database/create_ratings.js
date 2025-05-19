@@ -3,6 +3,7 @@ import { Book, User, Review } from "../models/associations.js";
 
 const addSelectedReviews = async (req, res, next) => {
   try {
+    const favoriteBooks = [20, 49, 51, 57, 58];
     const selectedBookIds = await Book.findAll();
     const user = await User.findOne();
 
