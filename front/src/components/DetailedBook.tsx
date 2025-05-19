@@ -2,12 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { IBook } from "../@types";
 import { getOneBook } from "../api/apiBooks";
-import {
-  addToMyReadLibrary,
-  addToWishRead,
-  deleteToMyReadLibrary,
-  deleteToWishRead,
-} from "../api/apiUser";
+import { addToMyReadLibrary, addToWishRead, deleteToMyReadLibrary, deleteToWishRead } from "../api/apiUser";
 import { useErrorHandler } from "../utils/useErrorHandler";
 import { toastSuccess, toastInfo, toastWarning } from "../utils/toast/toaster";
 import { useAuthStore } from "../utils/store/useAuthStore";
@@ -32,6 +27,7 @@ const BookDetail = () => {
    * Displays a warning if the user is not authenticated.
    */
   const handleAddRead = async () => {
+    useEffect(() => {}, []);
     if (!userId) {
       toastWarning(`Vous devez être connecté pour pouvoir ajouter un livre à une de vos listes.
    <div class="mt-4 text-center">
@@ -141,17 +137,14 @@ const BookDetail = () => {
         setBook(newBook);
 
         // Check if the current user has marked the book as read
-        const hasRead = newBook.users_has_read.some(
-          (user) => user.id === userId
-        );
+        const hasRead = newBook.users_has_read.some((user) => user.id === userId);
 
         // Check if the current user wants to read the book
-        const wantsToRead = newBook.users_need_to_read.some(
-          (user) => user.id === userId
-        );
+        const wantsToRead = newBook.users_need_to_read.some((user) => user.id === userId);
 
         setIsRead(hasRead);
         setToRead(wantsToRead);
+        AOS.refresh();
       } catch (error) {
         handleError(error);
       }
@@ -162,11 +155,7 @@ const BookDetail = () => {
 
   // check if the book exists
   if (!book) {
-    return (
-      <div className="text-center text-red-600 bg-red-100 p-4 rounded-md shadow-md">
-        Livre non trouvé
-      </div>
-    );
+    return <div className="text-center text-red-600 bg-red-100 p-4 rounded-md shadow-md">Livre non trouvé</div>;
   }
 
   return (
@@ -179,26 +168,24 @@ const BookDetail = () => {
         src={`https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/${book.cover_url}.jpg`}
         alt={`Couverture du livre : ${book.title}`}
         className="w-60 mr-5 h-auto mb-4"
+        data-aos="flip-right"
       />
 
       <div className="text-sm md:text-base max-w-xl">
         <p>
-          <span className="font-bold font-title text:2xl">Par :</span>{" "}
-          {/* Join author names if there are multiple */}
+          <span className="font-bold font-title text:2xl">Par :</span> {/* Join author names if there are multiple */}
           {book.authors.map((auth) => auth.name).join(", ")}
         </p>
 
         <h1 className="text-xl font-title font-bold mb-2">{book.title}</h1>
 
         <p>
-          <span className="font-bold font-title">Catégorie :</span>{" "}
-          {/* Join category names if there are multiple */}
+          <span className="font-bold font-title">Catégorie :</span> {/* Join category names if there are multiple */}
           {book.categories.map((cat) => cat.name).join(", ")}
         </p>
 
         <p className="mb-2">
-          <span className="font-bold font-title">Date de publication</span> :{" "}
-          {book.published}
+          <span className="font-bold font-title">Date de publication</span> : {book.published}
         </p>
 
         <p className="font-bold mt-4 mb-1 font-title text-lg">Description :</p>
@@ -218,13 +205,7 @@ const BookDetail = () => {
                 : "bg-gray-300 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400"
             }  rounded justify-center w-40 py-2 cursor-pointer`}
           >
-            <i
-              className={`${
-                isRead && !toRead
-                  ? "fa-solid fa-square-check"
-                  : "fa-solid fa-square-xmark"
-              }`}
-            ></i>
+            <i className={`${isRead && !toRead ? "fa-solid fa-square-check" : "fa-solid fa-square-xmark"}`}></i>
             <span>Lu</span>
           </button>
 

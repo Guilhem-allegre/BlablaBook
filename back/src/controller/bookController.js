@@ -67,7 +67,7 @@ const bookController = {
         const topBooks = booksWithRatings
           .filter((book) => book.averageRating !== null)
           .sort((a, b) => b.averageRating - a.averageRating)
-          .slice(0, 5);
+          .slice(0, 10);
 
         return res.status(200).json(topBooks);
       } catch (error) {
@@ -81,7 +81,7 @@ const bookController = {
       try {
         const randomBooks = await Book.findAll({
           order: [Sequelize.literal("RANDOM()")],
-          limit: 5,
+          limit: 10,
           include: includeOptions,
         });
 

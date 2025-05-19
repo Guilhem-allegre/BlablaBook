@@ -3,14 +3,23 @@ import { Link } from "react-router-dom";
 import { IBooks } from "../@types";
 import { useErrorHandler } from "../utils/useErrorHandler";
 import StarRatingStatic from "./review/StarRating";
+import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
 type BookGridProps = {
   title: string;
   fetchBooks: () => Promise<IBooks>;
   currentBookId?: number;
 };
+
 const BookGrid = ({ title, fetchBooks, currentBookId }: BookGridProps) => {
   const [bookList, setBookList] = useState<IBooks>([]);
   const { handleError } = useErrorHandler();
+
   useEffect(() => {
     async function loadBooks() {
       try {
@@ -23,43 +32,54 @@ const BookGrid = ({ title, fetchBooks, currentBookId }: BookGridProps) => {
     }
     loadBooks();
   }, [fetchBooks, currentBookId]);
+
   return (
     <section className="content ml-[5vw] mr-[5vw] py-10">
       <h2 className="text-3xl mb-4 font-bold font-title">{title}</h2>
-      <div className="grid grid-cols-1 gap-8 xxs:grid-cols-2 sm:grid-cols-3 md:grid-cols-2 ml:grid-cols-3 xl:grid-cols-5">
+
+      <Swiper
+        modules={[Navigation, Pagination, A11y, Autoplay]}
+        spaceBetween={30}
+        slidesPerView={5}
+        loop={true}
+        autoplay={{ delay: 1500, disableOnInteraction: false }}
+        navigation
+        pagination={{ clickable: true }}
+        breakpoints={{
+          480: { slidesPerView: 2 },
+          768: { slidesPerView: 3 },
+          1024: { slidesPerView: 4 },
+          1280: { slidesPerView: 5 },
+        }}
+        className="!pb-10" // Ajoute de l'espace sous le slider pour les flèches/pagination
+      >
         {bookList.map((book) => {
-          // Safety check to avoid errors with averageRating
-          const rating =
-            book.averageRating !== undefined && book.averageRating !== null
-              ? parseFloat(String(book.averageRating))
-              : null;
+          const rating = book.averageRating !== undefined && book.averageRating !== null ? parseFloat(String(book.averageRating)) : null;
 
           return (
-            <Link key={book.id} to={`/books/${book.id}`} className="block w-60 mx-auto xxs:w-full py-2" aria-label={`Voir les détails du livre ${book.title}`}>
-              <div className="book cursor-pointer hover:shadow-lg hover:rounded-md hover:transition-shadow">
-                <img
-                  src={`https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/${book.cover_url}.jpg`}
-                  alt=""
-                  role="presentation"
-                  className="h-80 w-full object-contain mb-2 mx-auto"
-                  width={160}
-                  height={320}
-                  loading="lazy"
-                />
-                <p className="text-center text-lg font-body [word-spacing:2px] tracking-wider ">{book.title}</p>
-              </div>
-              <div className="mt-2 min-h-[28px] flex justify-center">
-                {rating !== null ? (
-                  <StarRatingStatic rating={rating} showValue />
-                ) : (
-                  <p className="text-sm text-gray-500 italic">Pas encore noté</p>
-                )}
-              </div>
-            </Link>
+            <SwiperSlide key={book.id}>
+              <Link to={`/books/${book.id}`} className="block w-60 mx-auto py-2" aria-label={`Voir les détails du livre ${book.title}`}>
+                <div className="book cursor-pointer hover:shadow-lg hover:rounded-md hover:transition-shadow">
+                  <img
+                    src={`https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/${book.cover_url}.jpg`}
+                    alt={`Couverture de ${book.title}`}
+                    className="h-80 w-full object-contain mb-2 mx-auto"
+                    width={160}
+                    height={320}
+                    loading="lazy"
+                  />
+                  <p className="text-center text-lg font-body tracking-wider">{book.title}</p>
+                </div>
+                <div className="mt-2 min-h-[28px] flex justify-center">
+                  {rating !== null ? <StarRatingStatic rating={rating} showValue /> : <p className="text-sm text-gray-500 italic">Pas encore noté</p>}
+                </div>
+              </Link>
+            </SwiperSlide>
           );
         })}
-      </div>
+      </Swiper>
     </section>
   );
 };
+
 export default BookGrid;
