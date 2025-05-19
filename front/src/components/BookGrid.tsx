@@ -30,7 +30,7 @@ const BookGrid = ({ title, fetchBooks, currentBookId }: BookGridProps) => {
       <h2 className="text-3xl mb-4 font-bold font-title">{title}</h2>
       <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
         {bookList.map((book) => {
-          // Vérification de sécurité pour éviter des erreurs avec averageRating
+          // Safety check to avoid errors with averageRating
           const rating =
             book.averageRating !== undefined && book.averageRating !== null
               ? parseFloat(String(book.averageRating))
