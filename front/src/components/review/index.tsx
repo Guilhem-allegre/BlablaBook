@@ -45,6 +45,9 @@ const ReviewSection = () => {
     fetchData();
   }, [bookId]);
 
+  /**
+   * 
+   */
   const handleDeleteReview = () => {
     toastConfirm("Voulez-vous vraiment supprimer votre avis ?", async () => {
       try {

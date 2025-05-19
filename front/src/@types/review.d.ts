@@ -8,7 +8,7 @@ export interface IReview {
   rating: number | null;
   title: string | null;
   comment: string | null;
-  user: UserPreview;
+  user: IUserPreview;
   book_id: number;
   createdAt: string;
   updatedAt: string;
@@ -16,7 +16,7 @@ export interface IReview {
 
 export interface IReviewApiResponse {
   book_id: number;
-  reviews: Review[];
+  reviews: IReview[];
 }
 
 export interface INewReviewPayload {

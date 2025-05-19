@@ -1,10 +1,10 @@
-interface StarRatingStaticProps {
+interface IStarRatingStaticProps {
   rating: number; // ex : 4.3
   size?: number;  // optionnel : taille des étoiles
   showValue?: boolean; // optionnel : afficher "4.3" à côté
 }
 
-const StarRatingStatic = ({ rating, size = 20, showValue = false }: StarRatingStaticProps) => {
+const StarRatingStatic = ({ rating, size = 20, showValue = false }: IStarRatingStaticProps) => {
   const fullStars = Math.floor(rating);
   const hasHalfStar = rating - fullStars >= 0.5;
 

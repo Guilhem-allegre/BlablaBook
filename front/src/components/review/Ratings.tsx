@@ -2,7 +2,7 @@ import RatingBar from './RatingBar';
 import { IReview } from "../../@types/review";
 import { calculateRatingDistribution } from "../../utils/reviews";
 
-interface RatingsProps {
+interface IRatingsProps {
   reviews: IReview[];
 }
 
@@ -13,7 +13,7 @@ interface RatingsProps {
  * @param {Review[]} props.reviews - Array of reviews to compute distribution from.
  * @returns {JSX.Element} - The rendered rating distribution component.
  */
-const Ratings = ({ reviews }: RatingsProps) => {
+const Ratings = ({ reviews }: IRatingsProps) => {
   const distribution = calculateRatingDistribution(reviews);
 
   return (
