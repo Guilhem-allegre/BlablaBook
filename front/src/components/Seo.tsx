@@ -26,8 +26,8 @@ const Seo = ({ title, description, image, url}: SeoProps) => {
       <meta property="og:url" content={url} />
       <meta property="og:site_name" content={siteName} />
 
-       {/* Twitter Card */}
-       <meta name="twitter:card" content="summary_large_image" />
+      {/* Twitter Card */}
+      <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={`${siteName} - ${title}`} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image || defaultImage} />
