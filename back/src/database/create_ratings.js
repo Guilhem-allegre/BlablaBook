@@ -3,7 +3,7 @@ import { Book, User, Review } from "../models/associations.js";
 
 const addSelectedReviews = async (req, res, next) => {
   try {
-    const favoriteBooks = [20, 49, 51, 57, 58];
+    const favoriteBooks = [15, 20, 49, 51, 57, 58];
     const selectedBookIds = await Book.findAll();
     const user = await User.findOne();
 
@@ -12,6 +12,13 @@ const addSelectedReviews = async (req, res, next) => {
     }
 
     for (const bookId of selectedBookIds) {
+      let rating;
+
+      if (favoriteBooks.includes(bookId.id)) {
+        rating = 5.0;
+      } else {
+        rating = Math.round((Math.random() * 4 + 1) * 10) / 10;
+      }
       await Review.create({
         book_id: bookId.id,
         user_id: user.id,
