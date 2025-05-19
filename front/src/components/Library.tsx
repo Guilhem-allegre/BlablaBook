@@ -6,6 +6,7 @@ import { useErrorHandler } from "../utils/useErrorHandler";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Seo from "./Seo";
+import StarRatingStatic from "./review/StarRating";
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -32,11 +33,7 @@ const Library = () => {
 
   return (
     <>
-      <Seo
-        title="Bibliothèque"
-        description="Tous nos livres"
-        url={`${baseUrl}/library`}
-      />
+      <Seo title="Bibliothèque" description="Tous nos livres" url={`${baseUrl}/library`} />
       <section className="content ml-[5vw] mr-[5vw] bg-body pb-20 md:pb-8">
         <h2 className="text-3xl mt-8 mb-4 font-bold font-title">Tous Nos Livres</h2>
         <div className="book-list grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5 ">
@@ -51,6 +48,13 @@ const Library = () => {
                   className="h-80 w-100 object-contain mb-2 mx-auto"
                 />
                 <p className="text-center text-lg font-body [word-spacing:2px] tracking-wider">{book.title}</p>
+              </div>
+              <div className="mt-2 min-h-[28px] flex justify-center">
+                {book.averageRating !== null ? (
+                  <StarRatingStatic rating={Number(book.averageRating)} showValue />
+                ) : (
+                  <p className="text-sm text-gray-500 italic">Pas encore noté</p>
+                )}
               </div>
             </Link>
           ))}
