@@ -17,7 +17,7 @@ const Header = () => {
 
         <SearchBar />
 
-        <nav className="hidden md:flex gap-6 ml:gap-2">
+        <nav className="hidden md:flex gap-6 ml:gap-4">
           <Link
             to="/"
             aria-label="Accueil"
