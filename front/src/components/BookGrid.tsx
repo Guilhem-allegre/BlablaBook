@@ -63,7 +63,7 @@ const BookGrid = ({ title, fetchBooks, currentBookId }: BookGridProps) => {
           "--swiper-pagination-bullet-horizontal-gap": "8px",
           "--swiper-button-next-backgroundSize": "40px",
         }}
-        className="!p-10" // Ajoute de l'espace sous le slider pour les flèches/pagination
+        className="!pb-10" // Ajoute de l'espace sous le slider pour les flèches/pagination
       >
         {bookList.map((book) => {
           // Safety check to avoid errors with averageRating
