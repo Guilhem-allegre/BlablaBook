@@ -11,6 +11,7 @@
   --color-placeholder: #98868a;
   --font-title: "Atkinson", sans-serif;
   --font-body: "Merriweather", serif;
+  --breakpoint-xxs: 28.125rem; /* 400 px */
   --breakpoint-xs: 31.25rem; /* 500 px */
   --breakpoint-ml: 59.375rem; /* 950 px */
 }
@@ -28,4 +29,9 @@
   right: 15px !important;
   bottom: auto !important;
   left: auto !important;
+}
+
+.swiper-button-prev:after,
+.swiper-button-next:after {
+  display: none;
 }
