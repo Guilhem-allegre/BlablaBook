@@ -12,7 +12,6 @@ import CategoryPage from "./pages/CategoryPage";
 import MobileCategoryPage from "./pages/MobileCategoryPage";
 import Library from "./components/Library";
 import SettingsUser from "./pages/SettingsUser";
-import ProfilePage from "./components/ProfilePage";
 import UserReadPage from "./pages/UserReadPage";
 import UserToReadPage from "./pages/UserToReadPage";
 import Authentication from "./pages/Authentication";
@@ -25,6 +24,7 @@ import ErrorServer from "./pages/ErrorServer";
 
 import { ErrorBoundary } from "react-error-boundary";
 import DetailsBookPage from "./pages/DetailsBookPage";
+import ProfilePage from "./pages/Profilepage";
 
 function App() {
   const location = useLocation();

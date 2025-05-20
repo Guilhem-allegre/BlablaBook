@@ -184,7 +184,7 @@ const DetailsBookPage = () => {
             <p>
               <span className="font-bold font-title text:2xl">Par :</span>{" "}
               {book.authors.map((auth, index) => (
-                <Link key={auth.id} to={`/search?query=${encodeURIComponent(auth.name)}`} className="text-blue-600 hover:underline">
+                <Link key={auth.id} to={`/search?query=${encodeURIComponent(auth.name)}`} className="text-yellow-700 italic hover:underline">
                   {auth.name}
                   {index < book.authors.length - 1 ? ", " : ""}
                 </Link>
@@ -198,7 +198,7 @@ const DetailsBookPage = () => {
             </p>
             <p className="mb-2">
               <span className="font-bold font-title">Date de publication</span> :{" "}
-              <Link to={`/search?query=${book.published}`} className="text-blue-600 hover:underline">
+              <Link to={`/search?query=${book.published}`} className="text-yellow-700 hover:underline">
                 {book.published}
               </Link>
             </p>

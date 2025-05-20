@@ -41,7 +41,7 @@ const BookGrid = ({ title, fetchBooks, currentBookId }: BookGridProps) => {
       <h2 className="text-3xl mb-4 font-bold font-title">{title}</h2>
       <Swiper
         modules={[Navigation, Pagination, A11y, Autoplay]}
-        spaceBetween={50}
+        spaceBetween={40}
         slidesPerView={5}
         autoplay={{ delay: 2000, disableOnInteraction: false }}
         navigation
@@ -51,7 +51,7 @@ const BookGrid = ({ title, fetchBooks, currentBookId }: BookGridProps) => {
           550: { slidesPerView: 2 },
           768: { slidesPerView: 1 },
           850: { slidesPerView: 2 },
-          1110: { slidesPerView: 4 },
+          1110: { slidesPerView: 3 },
           1350: { slidesPerView: 4, spaceBetween: 200 },
           1550: { slidesPerView: 5 },
         }}
