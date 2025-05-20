@@ -31,7 +31,7 @@ const addSelectedReviews = async (req, res, next) => {
 
       // Déterminer la note : 5.0 pour les favoris, aléatoire pour les autres
       const isFavorite = favoriteBooks.includes(book.id);
-      const rating = isFavorite ? 5.0 : Math.round((Math.random() * 4 + 1) * 10) / 10;
+      const rating = isFavorite ? 5.0 : Math.round((Math.random() * 4 + 1));
 
       if (existingReview) {
         // Mettre à jour la review existante
